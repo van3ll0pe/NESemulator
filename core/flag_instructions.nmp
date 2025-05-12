@@ -1,0 +1,56 @@
+
+op CLC =
+    syntax = "CLC"
+    image = "18"
+    action = {
+        SR_C = 0;
+        cycle = cycle + 2;
+    }
+
+op CLD =
+    syntax = "CLD"
+    image = "D8"
+    action = {
+        SR_D = 0;
+        cycle = cycle + 2;
+    }
+
+op CLI = 
+    syntax = "CLI"
+    image = "58"
+    action = {
+        SR_I = 0;
+        cycle = cycle + 2;
+    }
+
+op CLV = 
+    syntax = "CLV"
+    image = "B8"
+    action = {
+        SR_V = 0;
+        cycle = cycle + 2;
+    }
+
+op SED = 
+    syntax = "SED"
+    image = "F8"
+    action = {
+        SR_D = 1;
+        cycle = cycle + 2;
+    }
+
+op SEC =
+    syntax = "SEC"
+    image = "38"
+    action = {
+        SR_C = 1;
+        cycle = cycle + 2;
+    }
+
+op SEI =
+    syntax = "SEI"
+    image = "78"
+    action = {
+        SR_I = 1;
+        cycle = cycle + 2;
+    }
