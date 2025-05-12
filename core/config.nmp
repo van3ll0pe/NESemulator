@@ -1,0 +1,62 @@
+// identification
+let NAME = "mos6502.config"
+let VERSION = "1.0"
+let ARCH = "mos6502"
+let BUILDER = "atmel"
+let LICENSE = "GPL"
+let COPYRIGHT = "University of Toulouse"
+let YEAR = "2025"
+let URL = ""
+
+//configuration
+let proc = "mos6502"
+let bit_order = "uppermost"
+let gliss_isize = "8, 16, 32"
+
+// useful types
+type bit = card(1)
+type byte = card(8)
+type word = card(16)
+
+// registers
+reg A[1, byte]
+reg X[1, byte]
+reg Y[1, byte]
+reg PC[1, word]
+reg SP[1, byte]
+
+var cycle: card(32) = 0;
+
+
+// status register
+reg SR[1, byte]
+reg SR_N[1, bit] alias = SR<7..7>
+reg SR_V[1, bit] alias = SR<6..6>
+reg SR_B[1, bit] alias = SR<4..4>
+reg SR_D[1, bit] alias = SR<3..3>
+reg SR_I[1, bit] alias = SR<2..2>
+reg SR_Z[1, bit] alias = SR<1..1>
+reg SR_C[1, bit] alias = SR<0..0>
+
+
+// memory
+mem M[65536, byte]
+
+
+macro store(address, data) =
+    M[address] = data;
+
+macro load(address, var) = 
+    var = M[address];
+
+
+//STACK POINTER IS ONLY 8bits on the memory plage 0x0100 - 0x01FF
+
+macro push(value) =
+    M[(0x1000 + SP)] = value;
+    SP = SP - 1;
+
+macro pop(register) = 
+    SP = SP + 1;
+    register = M[(0x1000 + SP)];
+

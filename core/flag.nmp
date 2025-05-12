@@ -1,0 +1,13 @@
+macro update_N(value) =
+    if value<7..7> == 1 then
+        SR_N = 1;
+    else
+        SR_N = 0;
+    endif;
+
+macro update_Z(value) =
+    if value == 0 then
+        SR_Z = 1;
+    else
+        SR_Z = 0;
+    endif;

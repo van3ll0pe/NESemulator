@@ -1,0 +1,32 @@
+// identification
+let NAME = "mos6502"
+let VERSION = "1.0"
+let ARCH = "mos6502"
+let BUILDER = "atmel"
+let LICENSE = "GPL"
+let COPYRIGHT = "University of Toulouse"
+let YEAR = "2025"
+let URL = ""
+
+//start mos6502
+op init()
+	action = {
+		PC = 0xFFFC;
+        SP = 0xFF;
+        A = 0;
+        X = 0;
+        Y = 0;
+        SR = 0b00100100;
+	}
+
+op instruction(x: all)
+    syntax  = x.syntax
+    image   = x.image
+    action  = {
+                PC = PC + 1;
+                x.action;
+            }
+
+op all =
+LDA | LDX | LDY | STA | STX | STY | TAX | TAY | TSX | TXA | TXS | TYA
+//list of instruction
