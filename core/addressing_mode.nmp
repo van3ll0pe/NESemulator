@@ -2,8 +2,8 @@
 
 //ABSOLUTE MODE
 macro ABS(address) = 
-    var lo_address: card(8) = 0;
-    var hi_address: card(8) = 0;
+    var lo_address[card(8)]= 0;
+    var hi_address[card(8)]= 0;
 
     load(PC, lo_address);
     PC = PC + 1;
@@ -14,7 +14,7 @@ macro ABS(address) =
 
 //ABSOLUTE, X MODE
 macro ABS_X(address) = 
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     ABS(_address);
 
     if (((_address & 0xFF) + X) & 0x100) then
@@ -25,7 +25,7 @@ macro ABS_X(address) =
 
 //ABSOLUTE, Y MODE
 macro ABS_Y(address) =
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     ABS(_address);
 
     if (((_address & 0xFF) + Y) & 0x100) then
@@ -42,10 +42,10 @@ macro IMMEDIATE(value) =
 
 //INDIRECT MODE
 macro IND(address) = 
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     ABS(_address);
-    var lo_address: card(8) = 0;
-    var hi_address: card(8) = 0;
+    var lo_address[card(8)]= 0;
+    var hi_address[card(8)]= 0;
 
     load(_address, lo_address);
     load((_address + 1), hi_address);
@@ -55,11 +55,11 @@ macro IND(address) =
 
 //RELATIVE MODE
 macro REL(address, next_page) =
-    var rel : card(8) = 0;
+    var rel[card(8)]= 0;
     load(PC, rel);
     PC = PC + 1;
 
-    var _address : card(16) = 0x0000 | rel;
+    var _address[card(16)] = 0x0000 | rel;
 
     if (rel & 0x80) then
         _address = 0xFF00 | rel;
@@ -72,7 +72,7 @@ macro REL(address, next_page) =
 
 //ZEROPAGE MODE
 macro ZPG(address) =
-    var _address: card(16) = 0;
+    var _address[card(16)] = 0;
     load(PC, _address);
     PC = PC + 1;
     address = (_address & 0x00FF);
@@ -80,7 +80,7 @@ macro ZPG(address) =
 
 //ZEROPAGE X MODE
 macro X_ZPG(address) =
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     load(PC, _address);
     PC = PC + 1;
 
@@ -89,7 +89,7 @@ macro X_ZPG(address) =
 
 //ZEROPAGE Y MODE
 macro Y_ZPG() = 
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     load(PC, _address);
     PC = PC + 1;
 
@@ -98,11 +98,11 @@ macro Y_ZPG() =
     
 //PRE INDEXED INDIRECT MODE
 macro PRE_IND(address) =
-    var _address : card(16) = 0;
+    var _address[card(16)] = 0;
     X_ZPG(_address);
 
-    var lo_address: card(8) = 0;
-    var hi_address: card(8) = 0;
+    var lo_address[card(8)]= 0;
+    var hi_address[card(8)]= 0;
 
     load(_address, lo_address);
     load((_address + 1), hi_address);
@@ -111,16 +111,16 @@ macro PRE_IND(address) =
 
 //POST INDEXED INDIRECT MODE
 macro POST_IND(address) =
-    var _address: card(16) = 0;
+    var _address[card(16)] = 0;
     ZPG(_address);
     
-    var lo_address : card(8) = 0;
-    var hi_address : card(8) = 0;
+    var lo_address[card(8)]= 0;
+    var hi_address[card(8)]= 0;
 
     load(_address, lo_address);
     load((_address + 1), hi_address);
 
-    var final_address : card(16) = ((hi_address << 8) | lo_address);
+    var final_address[card(16)] = ((hi_address << 8) | lo_address);
 
     if (((final_address & 0xFF) + Y) & 0x100) then
         cycle = cycle + 1;

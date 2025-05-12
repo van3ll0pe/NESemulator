@@ -7,7 +7,7 @@ op LDA_IMMEDIATE =
     syntax = "LDA immediate"
     image = "A9"
     action = {
-        var value : card(8) = 0;
+        var value[card(8)] = 0;
         IMMEDIATE(value);
         A = value;
         cycle = cycle + 2;
@@ -21,7 +21,7 @@ op LDA_ZEROPAGE =
     syntax = "LDA ZEROPAGE"
     image = "A5"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         load(address, A);
         cycle = cycle + 3;
@@ -34,7 +34,7 @@ op LDA_ZEROPAGE_X =
     syntax = "LDA ZEROPAGE X"
     image = "B5"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         X_ZPG(address);
         load(address, A);
         cycle = cycle + 3;
@@ -47,7 +47,7 @@ op LDA_ABSOLUTE =
     syntax = "LDA LDA_ABSOLUTE"
     image = "AD"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         load(address, A);
         cycle = cycle + 4;
@@ -60,7 +60,7 @@ op LDA_ABSOLUTE_X =
     syntax = "LDA ABSOLUTE X"
     image = "BD"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_X(address);
         load(address, A);
         cycle = cycle + 4;
@@ -73,7 +73,7 @@ op LDA_ABSOLUTE_Y =
     syntax = "LDA ABSOLUTE Y"
     image = "B9"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_Y(address);
         load(address, A);
         cycle = cycle + 4;
@@ -86,7 +86,7 @@ op LDA_PRE_INDIRECT =
     syntax = "LDA PRE INDIRECT"
     image = "A1"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         PRE_IND(address);
         load(address, A);
         cycle = cycle + 6;
@@ -99,7 +99,7 @@ op LDA_POST_INDIRECT =
     syntax = "LDA POST INDIRECT"
     image = "B1"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         POST_IND(address);
         load(address, A);
         cycle = cycle + 5;
@@ -116,7 +116,7 @@ op LDX_IMMEDIATE =
     syntax = "LDX IMMEDIATE"
     image = "A2"
     action = {
-        var value: card(8) = 0;
+        var value[card(8)] = 0;
         IMMEDIATE(value);
         X = value;
         cycle = cycle + 2;
@@ -129,7 +129,7 @@ op LDX_ZEROPAGE =
     syntax = "LDX ZEROPAGE"
     image = "A6"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         load(address, X);
         cycle = cycle + 3;
@@ -142,7 +142,7 @@ op LDX_ZEROPAGE_Y =
     syntax = "LDX ZEROPAGE Y"
     image = "B6"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         Y_ZPG(address);
         load(address, X);
         cycle = cycle + 4;
@@ -155,7 +155,7 @@ op LDX_ABSOLUTE =
     syntax = "LDX ABSOLUTE"
     image = "AE"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         load(address, X);
         cycle = cycle + 4;
@@ -168,7 +168,7 @@ op LDX_ABSOLUTE_Y =
     syntax = "LDX ABSOLUTE Y"
     image = "BE"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_Y(address);
         load(address, X);
         cycle = cycle + 4;
@@ -187,7 +187,7 @@ op LDY_IMMEDIATE =
     syntax = "LDY IMMEDIATE"
     image = "A0"
     action = {
-        var value : card(8) = 0;
+        var value[card(8)] = 0;
         IMMEDIATE(value);
         Y = value;
         cycle = cycle + 2;
@@ -200,7 +200,7 @@ op LDY_ZEROPAGE =
     syntax = "LDY ZEROPAGE"
     image = "A4"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         load(address, Y);
         cycle = cycle + 3;
@@ -213,7 +213,7 @@ op LDY_ZEROPAGE_X =
     syntax = "LDY ZEROPAGE X"
     image = "B4"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         X_ZPG(address);
         load(address, Y);
         cycle = cycle + 4;
@@ -226,7 +226,7 @@ op LDY_ABSOLUTE =
     syntax = "LDY ABSOLUTE"
     image = "AC"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         load(address, Y);
         cycle = cycle + 4;
@@ -239,7 +239,7 @@ op LDY_ABSOLUTE_X =
     syntax = "LDY ABSOLUTE X"
     image = "BC"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_X(address);
         load(address, Y);
         cycle = cycle + 4;
@@ -257,7 +257,7 @@ op STA_ZEROPAGE =
     syntax = "STA ZEROPAGE"
     image = "85"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         store(address, A);
         cycle = cycle + 3;
@@ -267,7 +267,7 @@ op STA_ZEROPAGE_X =
     syntax = "STA ZEROPAGE X"
     image = "95"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         X_ZPG(address);
         store(address, A);
         cycle = cycle + 4;
@@ -277,7 +277,7 @@ op STA_ABSOLUTE =
     syntax = "STA ABSOLUTE"
     image = "8D"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         store(address, A);
         cycle = cycle + 4;
@@ -287,7 +287,7 @@ op STA_ABSOLUTE_X =
     syntax = "STA ABSOLUTE X"
     image = "9D"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_X(address);
         store(address, A);
         cycle = cycle + 5;
@@ -297,7 +297,7 @@ op STA_ABSOLUTE_Y =
     syntax = "STA ABSOLUTE Y"
     image = "99"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS_Y(address);
         store(address, A);
         cycle = cycle + 5;
@@ -307,7 +307,7 @@ op STA_PRE_IND =
     syntax = "STA PRE INDIRECT"
     image = "81"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         PRE_IND(address);
         store(address, A);
         cycle = cycle + 6;
@@ -318,7 +318,7 @@ op STA_POST_IND =
     syntax = "STA POST INDIRECT"
     image = "91"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         POST_IND(address);
         store(address, A);
         cycle = cycle + 6;
@@ -333,7 +333,7 @@ op STX_ZEROPAGE =
     syntax = "STX ZEROPAGE"
     image = "86"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         store(address, X);
         cycle = cycle + 3;
@@ -343,7 +343,7 @@ op STX_ZEROPAGE_Y =
     syntax = "STX ZEROPAGE Y"
     image = "96"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         Y_ZPG(address);
         store(address, X);
         cycle = cycle + 4;
@@ -353,7 +353,7 @@ op STX_ABSOLUTE =
     syntax = "STX ABSOLUTE"
     image = "8E"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         store(address, X);
         cycle = cycle + 4;
@@ -367,7 +367,7 @@ op STY_ZEROPAGE =
     syntax = "STY ZEROPAGE"
     image = "84"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ZPG(address);
         store(address, Y);
         cycle = cycle + 3;
@@ -377,7 +377,7 @@ op STY_ZEROPAGE_X =
     syntax = "STY ZEROPAGE X"
     image = "94"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         X_ZPG(address);
         store(address, Y);
         cycle = cycle + 4;
@@ -387,7 +387,7 @@ op STY_ABSOLUTE =
     syntax = "STY ABSOLUTE"
     image = "8C"
     action = {
-        var address : card(16) = 0;
+        var address[card(16)] = 0;
         ABS(address);
         store(address, Y);
         cycle = cycle + 4;

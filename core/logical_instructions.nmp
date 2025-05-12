@@ -1,0 +1,278 @@
+
+op AND = AND_IMMEDIATE | AND_ZEROPAGE | AND_ZEROPAGE_X | AND_ABSOLUTE | AND_ABSOLUTE_X | AND_ABSOLUTE_Y | AND_PRE_IND | AND_POST_IND
+
+op AND_IMMEDIATE =
+    syntax = "AND IMMEDIATE"
+    image = "29"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+        A = A & value;
+        cycle = cycle + 2;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_ZEROPAGE = 
+    syntax = "AND ZEROPAGE"
+    image = "25"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 3;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_ZEROPAGE_X =
+    syntax = "AND ZEROPAGE X"
+    image = "35"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_ABSOLUTE =
+    syntax = "AND ABSOLUTE"
+    image = "2D"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_ABSOLUTE_X =
+    syntax = "AND ABSOLUTE X"
+    image = "3D"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_ABSOLUTE_Y =
+    syntax = "AND ABSOLUTE Y"
+    image = "39"
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_PRE_IND =
+    syntax = "AND PRE INDIRECT"
+    image = "21"
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 6;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op AND_POST_IND =
+    syntax = "AND POST INDIRECT"
+    image = "31"
+    action = {
+        var address[card(16)] = 0;
+        POST_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A & value;
+        cycle = cycle + 5;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+//---------------------------------------------------------------------------------------------------
+
+op EOR = EOR_ZEROPAGE
+
+op EOR_ZEROPAGE =
+    syntax = "EOR ZEROPAGE"
+    image = "52"
+    action = {
+        var address [card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = cycle + 5;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+//--------------------------------------------------------------------------------------------------
+
+op ORA = ORA_IMMEDIATE | ORA_ZEROPAGE | ORA_ZEROPAGE_X | ORA_ABSOLUTE | ORA_ABSOLUTE_X | ORA_ABSOLUTE_Y | ORA_PRE_IND | ORA_POST_IND
+
+
+op ORA_IMMEDIATE =
+    syntax = "ORA IMMEDIATE"
+    image = "09"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        A = A | value;
+        cycle = cycle + 2;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_ZEROPAGE = 
+    syntax = "ORA ZEROPAGE"
+    image = "05"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 3;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_ZEROPAGE_X =
+    syntax = "ORA ZEROPAGE X"
+    image = "15"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_ABSOLUTE =
+    syntax = "ORA ABSOLUTE"
+    image = "0D"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        
+        A = A | value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_ABSOLUTE_X = 
+    syntax = "ORA ABSOLUTE X"
+    image = "1D"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_ABSOLUTE_Y =
+    syntax = "ORA ABSOLUTE Y"
+    image = "19"
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_PRE_IND = 
+    syntax = "ORA PRE INDIRECT"
+    image = "01"
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 6;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ORA_POST_IND =
+    syntax = "ORA POST INDIRECT"
+    image = "11"
+    action = {
+        var address[card(16)] = 0;
+        POST_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A | value;
+        cycle = cycle + 5;
+
+        update_N(A);
+        update_Z(A);
+    }

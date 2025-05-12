@@ -23,7 +23,7 @@ op PHP =
     syntax = "PHP"
     image = "08"
     action = {
-        var SR_tmp : card(8) = SR;
+        var SR_tmp[card(8)]= SR;
         SR_tmp<5..5> = 1;
         SR_tmp<4..4> = 1;
 
@@ -35,7 +35,7 @@ op PLP =
     syntax = "PLP"
     image = "28"
     action = {
-        var SR_tmp : card(8) = 0;
+        var SR_tmp[card(8)]= 0;
         pop(SR_tmp);
 
         //BIT 4 & 5 ignored

@@ -40,4 +40,5 @@ op all =
 LDA | LDX | LDY | STA | STX | STY | TAX | TAY | TSX | TXA | TXS | TYA |
 PHA | PLA | PHP | PLP |
 CLC | CLD | CLI | CLV | SED | SEC | SEI |
+AND | ORA | EOR |
 //list of instruction
