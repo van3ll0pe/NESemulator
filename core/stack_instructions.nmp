@@ -1,0 +1,47 @@
+//stack instructions
+
+op PHA =
+    syntax = "PHA"
+    image = "48"
+    action = {
+        push(A);
+        cycle = cycle + 3;
+    }
+
+op PLA = 
+    syntax = "PLA"
+    image = "68"
+    action = {
+        pop(A);
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op PHP =
+    syntax = "PHP"
+    image = "08"
+    action = {
+        var SR_tmp : card(8) = SR;
+        SR_tmp<5..5> = 1;
+        SR_tmp<4..4> = 1;
+
+        push(SR_tmp);
+        cycle = cycle + 3;
+    }
+
+op PLP =
+    syntax = "PLP"
+    image = "28"
+    action = {
+        var SR_tmp : card(8) = 0;
+        pop(SR_tmp);
+
+        //BIT 4 & 5 ignored
+        SR<7..6> = SR_tmp<7..6>;
+        SR<5..5> = 1;
+        SR<3..0> = SR_tmp<3..0>;
+
+        cycle = cycle + 4;
+    }

@@ -8,6 +8,14 @@ let COPYRIGHT = "University of Toulouse"
 let YEAR = "2025"
 let URL = ""
 
+include "addressing_mode.nmp"
+include "flag.nmp"
+include "config.nmp"
+
+include "stack_instructions.nmp"
+include "transfer_instructions.nmp"
+
+
 //start mos6502
 op init()
 	action = {
@@ -28,5 +36,6 @@ op instruction(x: all)
             }
 
 op all =
-LDA | LDX | LDY | STA | STX | STY | TAX | TAY | TSX | TXA | TXS | TYA
+LDA | LDX | LDY | STA | STX | STY | TAX | TAY | TSX | TXA | TXS | TYA |
+PHA | PLA | PHP | PLP
 //list of instruction
