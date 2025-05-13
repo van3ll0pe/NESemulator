@@ -1,0 +1,354 @@
+op ADC = ADC_IMMEDIATE | ADC_ZEROPAGE | ADC_ZEROPAGE_X | ADC_ABSOLUTE | ADC_ABSOLUTE_X | ADC_ABSOLUTE_Y | ADC_PRE_IND | ADC_POST_IND
+
+op ADC_IMMEDIATE =
+    syntax = "ADC IMMEDIATE"
+    image = "69"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 2;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_ZEROPAGE =
+    syntax = "ADC ZEROPAGE"
+    image = "65"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 3;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_ZEROPAGE_X =
+    syntax = "ADC ZEROPAGE X"
+    image = "75"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 4;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_ABSOLUTE = 
+    syntax = "ADC ABSOLUTE"
+    image = "6D"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 4;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_ABSOLUTE_X = 
+    syntax = "ADC ABSOLUTE X"
+    image = "7D"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 4;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_ABSOLUTE_Y = 
+    syntax = "ADC ABSOLUTE Y"
+    image = "79"
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 4;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op ADC_PRE_IND = 
+    syntax = "ADC PRE INDIRECT"
+    image = "61"
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 6;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+
+op ADC_POST_IND = 
+    syntax = "ADC POST INDIRECT"
+    image = "71"
+    action = {
+        var address[card(16)] = 0;
+        POST_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = value + A + SR_C;
+
+        cycle = cycle + 5;
+        
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+//---------------------------------------------------------------------------
+
+op SBC = SBC_IMMEDIATE | SBC_ZEROPAGE | SBC_ZEROPAGE_X | SBC_ABSOLUTE | SBC_ABSOLUTE_X | SBC_ABSOLUTE_Y | SBC_PRE_IND | SBC_POST_IND
+
+op SBC_IMMEDIATE = 
+    syntax = "SBC IMMEDIATE"
+    image = "E9"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 2;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_ZEROPAGE =
+    syntax = "SBC_ZEROPAGE"
+    image = "E5"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 3;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_ZEROPAGE_X =
+    syntax = "SBC ZEROPAGE X"
+    image = "F5"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_ABSOLUTE =
+    syntax = "SBC ABSOLUTE"
+    image = "ED"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_ABSOLUTE_X = 
+    syntax = "SBC ABSOLUTE X"
+    image = "FD"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_ABSOLUTE_Y = 
+    syntax = "SBC ABSOLUTE Y"
+    image = "F9"
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_PRE_IND =
+    syntax = "SBC PRE INDIRECT"
+    image = "E1"
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 6;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }
+
+op SBC_POST_IND = 
+    syntax = "SBC POST INDIRECT"
+    image = "F1"
+    action = {
+        var address[card(16)] = 0;
+        POST_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        value = ~value;
+
+        var res[card(16)] = A + value + RS_C;
+
+        cycle = cycle + 5;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+        update_V(value, A, res<7..0>);
+
+        A = res<7..0>;
+    }

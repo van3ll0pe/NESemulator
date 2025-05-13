@@ -11,3 +11,17 @@ macro update_Z(value) =
     else
         SR_Z = 0;
     endif;
+
+macro update_V(value, A, res) =
+    if (((value ^ res) & (A ^ res) & 0x80) != 0) then
+        SR_V = 1;
+    else
+        SR_V = 0;
+    endif;
+
+macro update_C(value) = 
+    if value<8..8> == 1 then
+        SR_C = 1;
+    else
+        SR_C = 0;
+    endif;
