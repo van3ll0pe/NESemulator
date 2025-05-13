@@ -1,0 +1,256 @@
+op CMP = CMP_IMMEDIATE | CMP_ZEROPAGE | CMP_ZEROPAGE_X | CMP_ABSOLUTE | CMP_ABSOLUTE_X | CMP_ABSOLUTE_Y | CMP_PRE_IND | CMP_POST_IND
+
+op CMP_IMMEDIATE = 
+    syntax = "CMP IMMEDIATE"
+    image = "C9"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 2;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_ZEROPAGE =
+    syntax = "CMP ZEROPAGE"
+    image = "C5"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 3;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_ZEROPAGE_X = 
+    syntax = "CMP ZEROPAGE X"
+    image = "D5"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_ABSOLUTE = 
+    syntax = "CMP ABSOLUTE"
+    image = "CD"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_ABSOLUTE_X = 
+    syntax = "CMP ABSOLUTE X"
+    image = "DD"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_ABSOLUTE_Y =
+    syntax = "CMP ABSOLUTE Y"
+    image = "D9"
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_PRE_IND =
+    syntax = "CMP PRE INDIRECT"
+    image = "C1"
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 6;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CMP_POST_IND = 
+    syntax = "CMP POST INDIRECT"
+    image = "D1"
+    action = {
+        var address[card(16)] = 0;
+        POST_IND(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = A - value;
+
+        cycle = cycle + 5;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+//-------------------------------------------------------------------------
+
+op CPX = CPX_IMMEDIATE | CPX_ZEROPAGE | CPX_ABSOLUTE
+
+op CPX_IMMEDIATE = 
+    syntax = "CPX IMMEDIATE"
+    image = "E0"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        var res[card(16)] = X - value;
+
+        cycle = cycle + 2;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CPX_ZEROPAGE = 
+    syntax = "CPX ZEROPAGE"
+    image = "E4"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = X - value;
+
+        cycle = cycle + 3;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CPX_ABSOLUTE = 
+    syntax = "CPX ABSOLUTE"
+    image = "EC"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = X - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+
+//-------------------------------------------------------------------------
+
+op CPY = CPY_IMMEDIATE | CPY_ZEROPAGE | CPY_ABSOLUTE
+
+op CPY_IMMEDIATE =
+    syntax = "CPY IMMEDIATE"
+    image = "C0"
+    action = {
+        var value[card(8)] = 0;
+        IMMEDIATE(value);
+
+        var res[card(16)] = Y - value;
+
+        cycle = cycle + 2;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CPY_ZEROPAGE = 
+    syntax = "CPY ZEROPAGE"
+    image = "C4"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = Y - value;
+
+        cycle = cycle + 3;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
+
+op CPY_ABSOLUTE = 
+    syntax = "CPY ABSOLUTE"
+    image = "CC"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var res[card(16)] = Y - value;
+
+        cycle = cycle + 4;
+
+        update_N(res);
+        update_Z(res<7..0>);
+        update_C(res);
+    }
