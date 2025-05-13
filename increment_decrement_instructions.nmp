@@ -1,0 +1,194 @@
+
+op INX =
+    syntax = "INX"
+    image = "E8"
+    action = {
+        X = X + 1;
+        cycle = cycle + 2;
+
+        update_N(X);
+        update_Z(X);
+    }
+
+//----------------------------------------------------------
+
+op DEX =
+    syntax = "DEX"
+    image = "CA"
+    action = {
+        X = X - 1;
+        cycle = cycle + 2;
+
+        update_N(X);
+        update_Z(X);
+    }
+
+//----------------------------------------------------------
+
+op INY =
+    syntax = "INY"
+    image = "C8"
+    action = {
+        Y = Y + 1;
+        cycle = cycle + 2;
+
+        update_N(Y);
+        update_Z(Y);
+    }
+
+//----------------------------------------------------------
+
+op DEY = 
+    syntax = "DEY"
+    image = "88"
+    action = {
+        Y = Y - 1;
+        cycle = cycle + 2;
+
+        update_N(Y);
+        update_Z(Y);
+    }
+
+//----------------------------------------------------------
+
+op INC = INC_ZEROPAGE | INC_ZEROPAGE_X | INC_ABSOLUTE | INC_ABSOLUTE_X
+
+op INC_ZEROPAGE = 
+    syntax = "INC ZEROPAGE"
+    image = "E6"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value + 1;
+        store(address, value);
+
+        cycle = cycle + 5;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op INC_ZEROPAGE_X =
+    syntax = "INC ZEROPAGE X"
+    image = "F6"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value + 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op INC_ABSOLUTE = 
+    syntax = "INC ABSOLUTE"
+    image = "EE"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value + 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op INC_ABSOLUTE_X =
+    syntax = "INC ABSOLUTE X"
+    image = "FE"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value + 1;
+        store(address, value);
+
+        cycle = cycle + 7;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+//----------------------------------------------------------
+
+op DEC = DEC_ZEROPAGE | DEC_ZEROPAGE_X | DEC_ABSOLUTE | DEC_ABSOLUTE_X
+
+op DEC_ZEROPAGE =
+    syntax = "DEC ZEROPAGE"
+    image = "C6"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value - 1;
+        store(address, value);
+
+        cycle = cycle + 5;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op DEC_ZEROPAGE_X =
+    syntax = "DEC ZEROPAGE X"
+    image = "D6"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value - 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op DEC_ABSOLUTE = 
+    syntax = "DEC ABSOLUTE"
+    image = "CE"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value - 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op DEC_ABSOLUTE_X = 
+    syntax = "DEC ABSOLUTE X"
+    image = "DE"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+        value = value - 1;
+        store(address, value);
+
+        cycle = cycle + 7;
+
+        update_N(value);
+        update_Z(value);
+    }

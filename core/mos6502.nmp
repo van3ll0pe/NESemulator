@@ -15,6 +15,8 @@ include "config.nmp"
 include "stack_instructions.nmp"
 include "transfer_instructions.nmp"
 include "flag_instructions.nmp"
+include "logical_instructions.nmp"
+include "increment_decrement_instructions.nmp"
 
 
 //start mos6502
@@ -41,4 +43,5 @@ LDA | LDX | LDY | STA | STX | STY | TAX | TAY | TSX | TXA | TXS | TYA |
 PHA | PLA | PHP | PLP |
 CLC | CLD | CLI | CLV | SED | SEC | SEI |
 AND | ORA | EOR |
+INX | DEX | INY | DEY | INC | DEC
 //list of instruction
