@@ -1,6 +1,6 @@
 op ADC = ADC_IMMEDIATE | ADC_ZEROPAGE | ADC_ZEROPAGE_X | ADC_ABSOLUTE | ADC_ABSOLUTE_X | ADC_ABSOLUTE_Y | ADC_PRE_IND | ADC_POST_IND
 
-op ADC_IMMEDIATE =
+op ADC_IMMEDIATE
     syntax = "ADC IMMEDIATE"
     image = "69"
     action = {
@@ -19,7 +19,7 @@ op ADC_IMMEDIATE =
         A = res<7..0>;
     }
 
-op ADC_ZEROPAGE =
+op ADC_ZEROPAGE
     syntax = "ADC ZEROPAGE"
     image = "65"
     action = {
@@ -40,7 +40,7 @@ op ADC_ZEROPAGE =
         A = res<7..0>;
     }
 
-op ADC_ZEROPAGE_X =
+op ADC_ZEROPAGE_X
     syntax = "ADC ZEROPAGE X"
     image = "75"
     action = {
@@ -61,7 +61,7 @@ op ADC_ZEROPAGE_X =
         A = res<7..0>;
     }
 
-op ADC_ABSOLUTE = 
+op ADC_ABSOLUTE
     syntax = "ADC ABSOLUTE"
     image = "6D"
     action = {
@@ -82,7 +82,7 @@ op ADC_ABSOLUTE =
         A = res<7..0>;
     }
 
-op ADC_ABSOLUTE_X = 
+op ADC_ABSOLUTE_X 
     syntax = "ADC ABSOLUTE X"
     image = "7D"
     action = {
@@ -103,7 +103,7 @@ op ADC_ABSOLUTE_X =
         A = res<7..0>;
     }
 
-op ADC_ABSOLUTE_Y = 
+op ADC_ABSOLUTE_Y 
     syntax = "ADC ABSOLUTE Y"
     image = "79"
     action = {
@@ -124,7 +124,7 @@ op ADC_ABSOLUTE_Y =
         A = res<7..0>;
     }
 
-op ADC_PRE_IND = 
+op ADC_PRE_IND
     syntax = "ADC PRE INDIRECT"
     image = "61"
     action = {
@@ -146,7 +146,7 @@ op ADC_PRE_IND =
     }
 
 
-op ADC_POST_IND = 
+op ADC_POST_IND 
     syntax = "ADC POST INDIRECT"
     image = "71"
     action = {
@@ -171,7 +171,7 @@ op ADC_POST_IND =
 
 op SBC = SBC_IMMEDIATE | SBC_ZEROPAGE | SBC_ZEROPAGE_X | SBC_ABSOLUTE | SBC_ABSOLUTE_X | SBC_ABSOLUTE_Y | SBC_PRE_IND | SBC_POST_IND
 
-op SBC_IMMEDIATE = 
+op SBC_IMMEDIATE
     syntax = "SBC IMMEDIATE"
     image = "E9"
     action = {
@@ -192,7 +192,7 @@ op SBC_IMMEDIATE =
         A = res<7..0>;
     }
 
-op SBC_ZEROPAGE =
+op SBC_ZEROPAGE
     syntax = "SBC_ZEROPAGE"
     image = "E5"
     action = {
@@ -215,7 +215,7 @@ op SBC_ZEROPAGE =
         A = res<7..0>;
     }
 
-op SBC_ZEROPAGE_X =
+op SBC_ZEROPAGE_X
     syntax = "SBC ZEROPAGE X"
     image = "F5"
     action = {
@@ -238,7 +238,7 @@ op SBC_ZEROPAGE_X =
         A = res<7..0>;
     }
 
-op SBC_ABSOLUTE =
+op SBC_ABSOLUTE
     syntax = "SBC ABSOLUTE"
     image = "ED"
     action = {
@@ -261,7 +261,7 @@ op SBC_ABSOLUTE =
         A = res<7..0>;
     }
 
-op SBC_ABSOLUTE_X = 
+op SBC_ABSOLUTE_X 
     syntax = "SBC ABSOLUTE X"
     image = "FD"
     action = {
@@ -284,7 +284,7 @@ op SBC_ABSOLUTE_X =
         A = res<7..0>;
     }
 
-op SBC_ABSOLUTE_Y = 
+op SBC_ABSOLUTE_Y
     syntax = "SBC ABSOLUTE Y"
     image = "F9"
     action = {
@@ -307,7 +307,7 @@ op SBC_ABSOLUTE_Y =
         A = res<7..0>;
     }
 
-op SBC_PRE_IND =
+op SBC_PRE_IND
     syntax = "SBC PRE INDIRECT"
     image = "E1"
     action = {
@@ -330,7 +330,7 @@ op SBC_PRE_IND =
         A = res<7..0>;
     }
 
-op SBC_POST_IND = 
+op SBC_POST_IND
     syntax = "SBC POST INDIRECT"
     image = "F1"
     action = {

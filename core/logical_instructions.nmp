@@ -1,7 +1,7 @@
 
 op AND = AND_IMMEDIATE | AND_ZEROPAGE | AND_ZEROPAGE_X | AND_ABSOLUTE | AND_ABSOLUTE_X | AND_ABSOLUTE_Y | AND_PRE_IND | AND_POST_IND
 
-op AND_IMMEDIATE =
+op AND_IMMEDIATE
     syntax = "AND IMMEDIATE"
     image = "29"
     action = {
@@ -14,7 +14,7 @@ op AND_IMMEDIATE =
         update_Z(A);
     }
 
-op AND_ZEROPAGE = 
+op AND_ZEROPAGE
     syntax = "AND ZEROPAGE"
     image = "25"
     action = {
@@ -30,7 +30,7 @@ op AND_ZEROPAGE =
         update_Z(A);
     }
 
-op AND_ZEROPAGE_X =
+op AND_ZEROPAGE_X
     syntax = "AND ZEROPAGE X"
     image = "35"
     action = {
@@ -46,7 +46,7 @@ op AND_ZEROPAGE_X =
         update_Z(A);
     }
 
-op AND_ABSOLUTE =
+op AND_ABSOLUTE
     syntax = "AND ABSOLUTE"
     image = "2D"
     action = {
@@ -62,7 +62,7 @@ op AND_ABSOLUTE =
         update_Z(A);
     }
 
-op AND_ABSOLUTE_X =
+op AND_ABSOLUTE_X
     syntax = "AND ABSOLUTE X"
     image = "3D"
     action = {
@@ -78,7 +78,7 @@ op AND_ABSOLUTE_X =
         update_Z(A);
     }
 
-op AND_ABSOLUTE_Y =
+op AND_ABSOLUTE_Y
     syntax = "AND ABSOLUTE Y"
     image = "39"
     action = {
@@ -94,7 +94,7 @@ op AND_ABSOLUTE_Y =
         update_Z(A);
     }
 
-op AND_PRE_IND =
+op AND_PRE_IND
     syntax = "AND PRE INDIRECT"
     image = "21"
     action = {
@@ -110,7 +110,7 @@ op AND_PRE_IND =
         update_Z(A);
     }
 
-op AND_POST_IND =
+op AND_POST_IND
     syntax = "AND POST INDIRECT"
     image = "31"
     action = {
@@ -130,7 +130,7 @@ op AND_POST_IND =
 
 op EOR = EOR_ZEROPAGE
 
-op EOR_ZEROPAGE =
+op EOR_ZEROPAGE
     syntax = "EOR ZEROPAGE"
     image = "52"
     action = {
@@ -151,7 +151,7 @@ op EOR_ZEROPAGE =
 op ORA = ORA_IMMEDIATE | ORA_ZEROPAGE | ORA_ZEROPAGE_X | ORA_ABSOLUTE | ORA_ABSOLUTE_X | ORA_ABSOLUTE_Y | ORA_PRE_IND | ORA_POST_IND
 
 
-op ORA_IMMEDIATE =
+op ORA_IMMEDIATE
     syntax = "ORA IMMEDIATE"
     image = "09"
     action = {
@@ -165,7 +165,7 @@ op ORA_IMMEDIATE =
         update_Z(A);
     }
 
-op ORA_ZEROPAGE = 
+op ORA_ZEROPAGE
     syntax = "ORA ZEROPAGE"
     image = "05"
     action = {
@@ -181,7 +181,7 @@ op ORA_ZEROPAGE =
         update_Z(A);
     }
 
-op ORA_ZEROPAGE_X =
+op ORA_ZEROPAGE_X
     syntax = "ORA ZEROPAGE X"
     image = "15"
     action = {
@@ -197,7 +197,7 @@ op ORA_ZEROPAGE_X =
         update_Z(A);
     }
 
-op ORA_ABSOLUTE =
+op ORA_ABSOLUTE
     syntax = "ORA ABSOLUTE"
     image = "0D"
     action = {
@@ -213,7 +213,7 @@ op ORA_ABSOLUTE =
         update_Z(A);
     }
 
-op ORA_ABSOLUTE_X = 
+op ORA_ABSOLUTE_X
     syntax = "ORA ABSOLUTE X"
     image = "1D"
     action = {
@@ -229,7 +229,7 @@ op ORA_ABSOLUTE_X =
         update_Z(A);
     }
 
-op ORA_ABSOLUTE_Y =
+op ORA_ABSOLUTE_Y
     syntax = "ORA ABSOLUTE Y"
     image = "19"
     action = {
@@ -245,7 +245,7 @@ op ORA_ABSOLUTE_Y =
         update_Z(A);
     }
 
-op ORA_PRE_IND = 
+op ORA_PRE_IND
     syntax = "ORA PRE INDIRECT"
     image = "01"
     action = {
@@ -261,7 +261,7 @@ op ORA_PRE_IND =
         update_Z(A);
     }
 
-op ORA_POST_IND =
+op ORA_POST_IND
     syntax = "ORA POST INDIRECT"
     image = "11"
     action = {

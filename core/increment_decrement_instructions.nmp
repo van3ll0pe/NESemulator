@@ -1,5 +1,5 @@
 
-op INX =
+op INX
     syntax = "INX"
     image = "E8"
     action = {
@@ -12,7 +12,7 @@ op INX =
 
 //----------------------------------------------------------
 
-op DEX =
+op DEX
     syntax = "DEX"
     image = "CA"
     action = {
@@ -25,7 +25,7 @@ op DEX =
 
 //----------------------------------------------------------
 
-op INY =
+op INY
     syntax = "INY"
     image = "C8"
     action = {
@@ -38,7 +38,7 @@ op INY =
 
 //----------------------------------------------------------
 
-op DEY = 
+op DEY
     syntax = "DEY"
     image = "88"
     action = {
@@ -53,7 +53,7 @@ op DEY =
 
 op INC = INC_ZEROPAGE | INC_ZEROPAGE_X | INC_ABSOLUTE | INC_ABSOLUTE_X
 
-op INC_ZEROPAGE = 
+op INC_ZEROPAGE
     syntax = "INC ZEROPAGE"
     image = "E6"
     action = {
@@ -70,7 +70,7 @@ op INC_ZEROPAGE =
         update_Z(value);
     }
 
-op INC_ZEROPAGE_X =
+op INC_ZEROPAGE_X
     syntax = "INC ZEROPAGE X"
     image = "F6"
     action = {
@@ -87,7 +87,7 @@ op INC_ZEROPAGE_X =
         update_Z(value);
     }
 
-op INC_ABSOLUTE = 
+op INC_ABSOLUTE
     syntax = "INC ABSOLUTE"
     image = "EE"
     action = {
@@ -104,7 +104,7 @@ op INC_ABSOLUTE =
         update_Z(value);
     }
 
-op INC_ABSOLUTE_X =
+op INC_ABSOLUTE_X
     syntax = "INC ABSOLUTE X"
     image = "FE"
     action = {
@@ -125,7 +125,7 @@ op INC_ABSOLUTE_X =
 
 op DEC = DEC_ZEROPAGE | DEC_ZEROPAGE_X | DEC_ABSOLUTE | DEC_ABSOLUTE_X
 
-op DEC_ZEROPAGE =
+op DEC_ZEROPAGE
     syntax = "DEC ZEROPAGE"
     image = "C6"
     action = {
@@ -142,7 +142,7 @@ op DEC_ZEROPAGE =
         update_Z(value);
     }
 
-op DEC_ZEROPAGE_X =
+op DEC_ZEROPAGE_X
     syntax = "DEC ZEROPAGE X"
     image = "D6"
     action = {
@@ -159,7 +159,7 @@ op DEC_ZEROPAGE_X =
         update_Z(value);
     }
 
-op DEC_ABSOLUTE = 
+op DEC_ABSOLUTE
     syntax = "DEC ABSOLUTE"
     image = "CE"
     action = {
@@ -176,7 +176,7 @@ op DEC_ABSOLUTE =
         update_Z(value);
     }
 
-op DEC_ABSOLUTE_X = 
+op DEC_ABSOLUTE_X 
     syntax = "DEC ABSOLUTE X"
     image = "DE"
     action = {

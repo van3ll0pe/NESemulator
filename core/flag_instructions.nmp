@@ -1,5 +1,5 @@
 
-op CLC =
+op CLC
     syntax = "CLC"
     image = "18"
     action = {
@@ -7,7 +7,7 @@ op CLC =
         cycle = cycle + 2;
     }
 
-op CLD =
+op CLD
     syntax = "CLD"
     image = "D8"
     action = {
@@ -15,7 +15,7 @@ op CLD =
         cycle = cycle + 2;
     }
 
-op CLI = 
+op CLI
     syntax = "CLI"
     image = "58"
     action = {
@@ -23,7 +23,7 @@ op CLI =
         cycle = cycle + 2;
     }
 
-op CLV = 
+op CLV
     syntax = "CLV"
     image = "B8"
     action = {
@@ -31,7 +31,7 @@ op CLV =
         cycle = cycle + 2;
     }
 
-op SED = 
+op SED
     syntax = "SED"
     image = "F8"
     action = {
@@ -39,7 +39,7 @@ op SED =
         cycle = cycle + 2;
     }
 
-op SEC =
+op SEC
     syntax = "SEC"
     image = "38"
     action = {
@@ -47,7 +47,7 @@ op SEC =
         cycle = cycle + 2;
     }
 
-op SEI =
+op SEI
     syntax = "SEI"
     image = "78"
     action = {

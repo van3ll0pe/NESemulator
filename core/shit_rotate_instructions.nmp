@@ -1,0 +1,399 @@
+op ASL = ASL_ACCUMULATOR | ASL_ZEROPAGE | ASL_ZEROPAGE_X | ASL_ABSOLUTE | ASL_ABSOLUTE_X
+
+op ASL_ACCUMULATOR
+    syntax = "ASL ACCUMULATOR"
+    image = "0A"
+    action = {
+        SR_C = A<7..7>
+
+        A = A << 1;
+
+        cycle = cycle + 2;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ASL_ZEROPAGE
+    syntax = "ASL ZEROPAGE"
+    image = "06"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<7..7>;
+
+        value = value << 1;
+        store(address, value);
+
+        cycle = cycle + 5;
+        update_N(value);
+        update_Z(value);
+    }
+
+op ASL_ZEROPAGE_X
+    syntax = "ASL ZEROPAGE X"
+    image = "16"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<7..7>;
+
+        value = value << 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+        update_N(value);
+        update_Z(value);
+    }
+
+op ASL_ABSOLUTE
+    syntax = "ASL ABSOLUTE"
+    image = "0E"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<7..7>;
+
+        value = value << 1;
+        store(address, value);
+
+        cycle = cycle + 6;
+        update_N(value);
+        update_Z(value);
+    }
+
+op ASL_ABSOLUTE_X
+    syntax = "ASL ABSOLUTE X"
+    image = "1E"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<7..7>;
+
+        value = value << 1;
+        store(address, value);
+
+        cycle = cycle + 7;
+        update_N(value);
+        update_Z(value);
+    }
+
+//-----------------------------------------------------------------
+
+op LSR = LSR_ACCUMULATOR | LSR_ZEROPAGE | LSR_ZEROPAGE_X | LSR_ABSOLUTE | LSR_ABSOLUTE_X
+
+op LSR_ACCUMULATOR
+    syntax = "LSR_ACCUMULATOR"
+    image = "4A"
+    action = {
+
+        SR_C = A<0..0>;
+
+        A = A >> 1;
+
+        cycle = cycle + 2;
+        update_Z(A);
+        SR_N = 0;
+    }
+
+op LSR_ZEROPAGE
+    syntax = "LSR ZEROPAGE"
+    image = "46"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<0..0>;
+
+        value = value >> 1;
+
+        store(address, value);
+        cycle = cycle + 5;
+        SR_N = 0;
+        update_Z(value);
+    }
+
+op LSR_ZEROPAGE_X
+    syntax = "LSR ZEROPAGE X"
+    image = "56"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<0..0>;
+
+        value = value >> 1;
+
+        store(address, value);
+        cycle = cycle + 6;
+        SR_N = 0;
+        update_Z(value);
+    }
+
+op LSR_ABSOLUTE
+    syntax = "LSR ABSOLUTE"
+    image = "4E"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<0..0>;
+
+        value = value >> 1;
+
+        store(address, value);
+        cycle = cycle + 6;
+        SR_N = 0;
+        update_Z(value);
+    }
+
+op LSR_ABSOLUTE_X
+syntax = "LSR ABSOLUTE X"
+    image = "5E"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        SR_C = value<0..0>;
+
+        value = value >> 1;
+
+        store(address, value);
+        cycle = cycle + 7;
+        SR_N = 0;
+        update_Z(value);
+    }
+
+//-----------------------------------------------------------------
+
+op ROL = ROL_ACCUMULATOR | ROL_ZEROPAGE | ROL_ZEROPAGE_X | ROL_ABSOLUTE | ROL_ABSOLUTE_X
+
+op ROL_ACCUMULATOR
+    syntax = "ROL ACCUMULATOR"
+    image = "2A"
+    action = {
+        var carry[card(1)] = A<7..7>;
+        A = A << 1;
+        A<0..0> = SR_C;
+        SR_C = carry;
+
+        cycle = cycle + 2;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ROL_ZEROPAGE
+    syntax = "ROL ZEROPAGE"
+    image = "26"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<7..7>;
+        value = value << 1;
+        value<0..0> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 5;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROL_ZEROPAGE_X
+    syntax = "ROL ZEROPAGE X"
+    image = "36"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<7..7>;
+        value = value << 1;
+        value<0..0> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROL_ABSOLUTE
+    syntax = "ROL ABSOLUTE"
+    image = "2E"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<7..7>;
+        value = value << 1;
+        value<0..0> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROL_ABSOLUTE_X
+    syntax = "ROL ABSOLUTE X"
+    image = "3E"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<7..7>;
+        value = value << 1;
+        value<0..0> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 7;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+//-----------------------------------------------------------------
+
+op ROR = ROR_ACCUMULATOR | ROR_ZEROPAGE | ROR_ZEROPAGE_X | ROR_ABSOLUTE | ROR_ABSOLUTE_X
+
+op ROR_ACCUMULATOR
+    syntax = "ROR ACCUMULATOR"
+    image = "6A"
+    action = {
+        var carry[card(1)] = A<0..0>;
+        A = A >> 1;
+        A<7..7> = SR_C;
+        SR_C = carry;
+
+        cycle = cycle + 2;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op ROR_ZEROPAGE
+    syntax = "ROR ZEROPAGE"
+    image = "66"
+    action = {
+        var address[card(16)] = 0;
+        ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<0..0>;
+        value = value >> 1;
+        value<7..7> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 5;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROR_ZEROPAGE_X
+    syntax = "ROR ZEROPAGE X"
+    image = "76"
+    action = {
+        var address[card(16)] = 0;
+        X_ZPG(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<0..0>;
+        value = value >> 1;
+        value<7..7> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROR_ABSOLUTE
+    syntax = "ROR ABSOLUTE"
+    image = "6E"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<0..0>;
+        value = value >> 1;
+        value<7..7> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 6;
+
+        update_N(value);
+        update_Z(value);
+    }
+
+op ROR_ABSOLUTE_X
+    syntax = "ROR ABSOLUTE X"
+    image = "7E"
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        var carry[card(1)] = value<0..0>;
+        value = value >> 1;
+        value<7..7> = SR_C;
+        SR_C = carry;
+
+        store(address, value);
+
+        cycle = cycle + 7;
+
+        update_N(value);
+        update_Z(value);
+    }

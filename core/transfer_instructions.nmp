@@ -3,7 +3,7 @@ op LDA =
 LDA_IMMEDIATE | LDA_ZEROPAGE | LDA_ZEROPAGE_X | LDA_ABSOLUTE | LDA_ABSOLUTE_X | LDA_ABSOLUTE_Y | LDA_PRE_INDIRECT | LDA_POST_INDIRECT
 
 
-op LDA_IMMEDIATE =
+op LDA_IMMEDIATE
     syntax = "LDA immediate"
     image = "A9"
     action = {
@@ -17,7 +17,7 @@ op LDA_IMMEDIATE =
 
     }
 
-op LDA_ZEROPAGE = 
+op LDA_ZEROPAGE
     syntax = "LDA ZEROPAGE"
     image = "A5"
     action = {
@@ -30,7 +30,7 @@ op LDA_ZEROPAGE =
         update_Z(A);
     }
 
-op LDA_ZEROPAGE_X = 
+op LDA_ZEROPAGE_X 
     syntax = "LDA ZEROPAGE X"
     image = "B5"
     action = {
@@ -43,7 +43,7 @@ op LDA_ZEROPAGE_X =
         update_Z(A);
     }
 
-op LDA_ABSOLUTE =
+op LDA_ABSOLUTE
     syntax = "LDA LDA_ABSOLUTE"
     image = "AD"
     action = {
@@ -56,7 +56,7 @@ op LDA_ABSOLUTE =
         update_Z(A);
     }
 
-op LDA_ABSOLUTE_X = 
+op LDA_ABSOLUTE_X
     syntax = "LDA ABSOLUTE X"
     image = "BD"
     action = {
@@ -69,7 +69,7 @@ op LDA_ABSOLUTE_X =
         update_Z(A);
     }
 
-op LDA_ABSOLUTE_Y = 
+op LDA_ABSOLUTE_Y
     syntax = "LDA ABSOLUTE Y"
     image = "B9"
     action = {
@@ -82,7 +82,7 @@ op LDA_ABSOLUTE_Y =
         update_Z(A);
     }
 
-op LDA_PRE_INDIRECT = 
+op LDA_PRE_INDIRECT
     syntax = "LDA PRE INDIRECT"
     image = "A1"
     action = {
@@ -95,7 +95,7 @@ op LDA_PRE_INDIRECT =
         update_Z(A);
     }
 
-op LDA_POST_INDIRECT = 
+op LDA_POST_INDIRECT
     syntax = "LDA POST INDIRECT"
     image = "B1"
     action = {
@@ -112,7 +112,7 @@ op LDA_POST_INDIRECT =
 
 op LDX = LDX_IMMEDIATE | LDX_ZEROPAGE | LDX_ZEROPAGE_Y | LDX_ABSOLUTE | LDX_ABSOLUTE_Y
 
-op LDX_IMMEDIATE =
+op LDX_IMMEDIATE
     syntax = "LDX IMMEDIATE"
     image = "A2"
     action = {
@@ -125,7 +125,7 @@ op LDX_IMMEDIATE =
         update_Z(X);
     }
 
-op LDX_ZEROPAGE = 
+op LDX_ZEROPAGE
     syntax = "LDX ZEROPAGE"
     image = "A6"
     action = {
@@ -138,7 +138,7 @@ op LDX_ZEROPAGE =
         update_Z(X);
     }
 
-op LDX_ZEROPAGE_Y =
+op LDX_ZEROPAGE_Y
     syntax = "LDX ZEROPAGE Y"
     image = "B6"
     action = {
@@ -151,7 +151,7 @@ op LDX_ZEROPAGE_Y =
         update_Z(X);
     }
 
-op LDX_ABSOLUTE = 
+op LDX_ABSOLUTE
     syntax = "LDX ABSOLUTE"
     image = "AE"
     action = {
@@ -164,7 +164,7 @@ op LDX_ABSOLUTE =
         update_Z(X);
     }
 
-op LDX_ABSOLUTE_Y =
+op LDX_ABSOLUTE_Y
     syntax = "LDX ABSOLUTE Y"
     image = "BE"
     action = {
@@ -183,7 +183,7 @@ op LDX_ABSOLUTE_Y =
 
 op LDY = LDY_IMMEDIATE | LDY_ZEROPAGE | LDY_ZEROPAGE_X | LDY_ABSOLUTE | LDY_ABSOLUTE_X
 
-op LDY_IMMEDIATE = 
+op LDY_IMMEDIATE
     syntax = "LDY IMMEDIATE"
     image = "A0"
     action = {
@@ -196,7 +196,7 @@ op LDY_IMMEDIATE =
         update_Z(Y);
     }
 
-op LDY_ZEROPAGE = 
+op LDY_ZEROPAGE
     syntax = "LDY ZEROPAGE"
     image = "A4"
     action = {
@@ -209,7 +209,7 @@ op LDY_ZEROPAGE =
         update_Z(Y);
     }
 
-op LDY_ZEROPAGE_X = 
+op LDY_ZEROPAGE_X 
     syntax = "LDY ZEROPAGE X"
     image = "B4"
     action = {
@@ -222,7 +222,7 @@ op LDY_ZEROPAGE_X =
         update_Z(Y);
     }
 
-op LDY_ABSOLUTE = 
+op LDY_ABSOLUTE
     syntax = "LDY ABSOLUTE"
     image = "AC"
     action = {
@@ -235,7 +235,7 @@ op LDY_ABSOLUTE =
         update_Z(Y);
     }
 
-op LDY_ABSOLUTE_X =
+op LDY_ABSOLUTE_X
     syntax = "LDY ABSOLUTE X"
     image = "BC"
     action = {
@@ -253,7 +253,7 @@ op LDY_ABSOLUTE_X =
 
 op STA = STA_ZEROPAGE | STA_ZEROPAGE_X | STA_ABSOLUTE | STA_ABSOLUTE_X | STA_ABSOLUTE_Y | STA_POST_IND | STA_PRE_IND
 
-op STA_ZEROPAGE =
+op STA_ZEROPAGE
     syntax = "STA ZEROPAGE"
     image = "85"
     action = {
@@ -263,7 +263,7 @@ op STA_ZEROPAGE =
         cycle = cycle + 3;
     }
 
-op STA_ZEROPAGE_X = 
+op STA_ZEROPAGE_X
     syntax = "STA ZEROPAGE X"
     image = "95"
     action = {
@@ -273,7 +273,7 @@ op STA_ZEROPAGE_X =
         cycle = cycle + 4;
     }
 
-op STA_ABSOLUTE =
+op STA_ABSOLUTE
     syntax = "STA ABSOLUTE"
     image = "8D"
     action = {
@@ -283,7 +283,7 @@ op STA_ABSOLUTE =
         cycle = cycle + 4;
     }
 
-op STA_ABSOLUTE_X = 
+op STA_ABSOLUTE_X
     syntax = "STA ABSOLUTE X"
     image = "9D"
     action = {
@@ -293,7 +293,7 @@ op STA_ABSOLUTE_X =
         cycle = cycle + 5;
     }
 
-op STA_ABSOLUTE_Y = 
+op STA_ABSOLUTE_Y
     syntax = "STA ABSOLUTE Y"
     image = "99"
     action = {
@@ -303,7 +303,7 @@ op STA_ABSOLUTE_Y =
         cycle = cycle + 5;
     }
 
-op STA_PRE_IND = 
+op STA_PRE_IND
     syntax = "STA PRE INDIRECT"
     image = "81"
     action = {
@@ -314,7 +314,7 @@ op STA_PRE_IND =
     }
 
 
-op STA_POST_IND = 
+op STA_POST_IND
     syntax = "STA POST INDIRECT"
     image = "91"
     action = {
@@ -329,7 +329,7 @@ op STA_POST_IND =
 op STX = STX_ZEROPAGE | STX_ZEROPAGE_Y | STX_ABSOLUTE
 
 
-op STX_ZEROPAGE = 
+op STX_ZEROPAGE
     syntax = "STX ZEROPAGE"
     image = "86"
     action = {
@@ -339,7 +339,7 @@ op STX_ZEROPAGE =
         cycle = cycle + 3;
     }
 
-op STX_ZEROPAGE_Y = 
+op STX_ZEROPAGE_Y
     syntax = "STX ZEROPAGE Y"
     image = "96"
     action = {
@@ -349,7 +349,7 @@ op STX_ZEROPAGE_Y =
         cycle = cycle + 4;
     }
 
-op STX_ABSOLUTE = 
+op STX_ABSOLUTE
     syntax = "STX ABSOLUTE"
     image = "8E"
     action = {
@@ -363,7 +363,7 @@ op STX_ABSOLUTE =
 
 op STY = STY_ZEROPAGE | STY_ZEROPAGE_X | STY_ABSOLUTE
 
-op STY_ZEROPAGE =
+op STY_ZEROPAGE
     syntax = "STY ZEROPAGE"
     image = "84"
     action = {
@@ -373,7 +373,7 @@ op STY_ZEROPAGE =
         cycle = cycle + 3;
     }
 
-op STY_ZEROPAGE_X =
+op STY_ZEROPAGE_X
     syntax = "STY ZEROPAGE X"
     image = "94"
     action = {
@@ -383,7 +383,7 @@ op STY_ZEROPAGE_X =
         cycle = cycle + 4;
     }
 
-op STY_ABSOLUTE = 
+op STY_ABSOLUTE
     syntax = "STY ABSOLUTE"
     image = "8C"
     action = {
@@ -395,7 +395,7 @@ op STY_ABSOLUTE =
 
 //---------------------------------------------------------------------------------
 
-op TAX =
+op TAX
     syntax = "TAX"
     image = "AA"
     action = {
@@ -409,7 +409,7 @@ op TAX =
 
 //--------------------------------------------------------------------------------
 
-op TAY = 
+op TAY
     syntax = "TAY"
     image = "A8"
     action = {
@@ -422,7 +422,7 @@ op TAY =
 
 //--------------------------------------------------------------------------------
 
-op TSX = 
+op TSX
     syntax = "TSX"
     image = "BA"
     action = {
@@ -435,7 +435,7 @@ op TSX =
 
 //-------------------------------------------------------------------------------
 
-op TXA =
+op TXA
     syntax = "TXA"
     image = "8A"
     action = {
@@ -448,7 +448,7 @@ op TXA =
 
 //-------------------------------------------------------------------------------
 
-op TXS = 
+op TXS
     syntax = "TXS"
     image = "9A"
     action = {
@@ -458,7 +458,7 @@ op TXS =
 
 //-------------------------------------------------------------------------------
 
-op TYA = 
+op TYA
     syntax = "TYA"
     image = "98"
     action = {
