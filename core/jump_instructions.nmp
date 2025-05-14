@@ -1,0 +1,41 @@
+op JMP = JMP_ABSOLUTE | JMP_INDIRECT
+
+op JMP_ABSOLUTE =
+    syntax = "JMP ABSOLUTE"
+    image = "4C"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        cycle = cycle + 3;
+        PC = address;
+    }
+
+op JMP_INDIRECT =
+    syntax = "JMP INDIRECT"
+    image = "6C"
+    action = {
+        var address[card(16)] = 0;
+        IND(address);
+        cycle = cycle + 5;
+        PC = address;
+    }
+
+op JSR =
+    syntax = "JSR"
+    image = "20"
+    action = {
+        var address[card(16)] = 0;
+        ABS(address);
+        push16(PC);
+
+        cycle = cycle + 6;
+        PC = address;
+    }
+
+op RTS =
+    syntax = "RTS"
+    image = "60"
+    action = {
+        pop16(PC);
+        cycle = cycle + 6;
+    }

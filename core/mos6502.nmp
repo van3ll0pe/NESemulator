@@ -21,7 +21,7 @@ include "arithmetic_instructions.nmp"
 include "compate_instructions.nmp"
 include "shift_rotate_instructions.nmp"
 include "branch_instructions.nmp"
-
+include "jump_instructions.nmp"
 
 //start mos6502
 op init()
@@ -38,8 +38,8 @@ op instruction(x: all)
     syntax  = x.syntax
     image   = x.image
     action  = {
-                PC = PC + 1;
                 x.action;
+                PC = PC + 1;
             }
 
 op all =
@@ -52,5 +52,5 @@ ADC | SBC |
 CMP | CPX | CPY |
 ASL | LSR | ROL | ROR |
 BCC | BCS | BEQ | BMI | BNE | BPL | BVC | BVS |
-
+JMP | JSR | RTS |
 //list of instruction

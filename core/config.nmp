@@ -11,7 +11,7 @@ let URL = ""
 //configuration
 let proc = "mos6502"
 let bit_order = "uppermost"
-let gliss_isize = "8, 16, 32"
+let gliss_isize = "8"
 
 // useful types
 type bit = card(1)
@@ -25,7 +25,7 @@ reg Y[1, byte]
 reg PC[1, word]
 reg SP[1, byte]
 
-var cycle: card(32) = 0;
+var cycle[card(32)] = 0;
 
 
 // status register
@@ -60,3 +60,14 @@ macro pop(register) =
     SP = SP + 1;
     register = M[(0x1000 + SP)];
 
+macro push16(value) =
+    M[(0x1000 + SP)] = ((value & 0xFF00) >> 8);
+    SP = SP - 1;
+    M[(0x1000 + SP)] = (value & 0xFF);
+    SP = SP - 1;
+
+macro pop16(value) = 
+    SP = SP + 1;
+    value = M[(0x1000 + SP)];
+    SP = SP + 1;
+    value = value | (M((0x1000 + SP)) << 8);
