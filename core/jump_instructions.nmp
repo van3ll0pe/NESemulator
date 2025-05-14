@@ -26,6 +26,7 @@ op JSR =
     action = {
         var address[card(16)] = 0;
         ABS(address);
+        PC = PC - 1;
         push16(PC);
 
         cycle = cycle + 6;
@@ -37,5 +38,6 @@ op RTS =
     image = "60"
     action = {
         pop16(PC);
+        PC = PC + 1;
         cycle = cycle + 6;
     }
