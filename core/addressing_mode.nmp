@@ -54,7 +54,7 @@ macro IND(address) =
 
 
 //RELATIVE MODE
-macro REL(address, next_page) =
+macro REL(address) =
     var rel[card(8)]= 0;
     load(PC, rel);
     PC = PC + 1;
@@ -66,8 +66,6 @@ macro REL(address, next_page) =
     endif;
 
     address = (PC + _address);
-
-    next_page = (PC >> 8) != (address >> 8); //savoir si la next page est modifié pour ajouter un cycle de plus
 
 
 //ZEROPAGE MODE

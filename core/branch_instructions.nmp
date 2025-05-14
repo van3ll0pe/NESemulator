@@ -1,0 +1,145 @@
+op BCC = 
+    syntax = "BCC"
+    image = "90"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_C == 0 then
+            cycle = cycle + 1;
+
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BCS =
+    syntax = "BCS"
+    image = "B0"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_C == 1 then
+            cycle = cycle + 1;
+
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BEQ =
+    syntax = "BEQ"
+    image = "F0"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_Z == 1 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BNE =
+    syntax = "BNE"
+    image = "D0"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_Z == 0 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BMI =
+    syntax = "BMI"
+    image = "30"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_N == 1 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BPL = 
+    syntax = "BPL"
+    image = "10"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_N == 0 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BVS = 
+    syntax = "BVS"
+    image = "70"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_V == 1 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }
+
+op BVC =
+    syntax = "BVC"
+    image = "50"
+    action = {
+        var address[card(16)] = 0;
+        REL(address);
+
+        cycle = cycle + 2;
+
+        if SR_V == 0 then
+            cycle = cycle + 1;
+            if (address & 0xFF00) != (PC & 0xFF00) then
+                cycle = cycle + 1;
+            endif;
+            PC = address;
+        endif;
+    }

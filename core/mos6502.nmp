@@ -20,6 +20,7 @@ include "increment_decrement_instructions.nmp"
 include "arithmetic_instructions.nmp"
 include "compate_instructions.nmp"
 include "shift_rotate_instructions.nmp"
+include "branch_instructions.nmp"
 
 
 //start mos6502
@@ -50,4 +51,6 @@ INX | DEX | INY | DEY | INC | DEC |
 ADC | SBC |
 CMP | CPX | CPY |
 ASL | LSR | ROL | ROR |
+BCC | BCS | BEQ | BMI | BNE | BPL | BVC | BVS |
+
 //list of instruction
