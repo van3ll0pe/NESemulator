@@ -42,6 +42,15 @@ reg SR_C[1, bit] alias = SR<0..0>
 // memory
 mem M[65536, byte]
 
+let IRQ_ADDRESS_LO : card(16) = 0xFFFE;
+let IRQ_ADDRESS_HI : card(16) = 0xFFFF;
+
+let RES_ADDRESS_LO : card(16) = 0xFFFC;
+let RES_ADDRESS_HI : card(16) = 0xFFFD;
+
+let NMI_ADDRESS_LO : card(16) = 0xFFFA;
+let NMI_ADDRESS_HI : card(16) = 0xFFFB;
+
 
 macro store(address, data) =
     M[address] = data;

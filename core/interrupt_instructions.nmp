@@ -1,0 +1,39 @@
+op BRK
+    syntax = "BRK"
+    image = "00"
+    action = {
+        PC = PC + 1; //skip the extra byte
+        push16(PC);
+
+        var SR_tmp[card(8)] = SR;
+        SR_tmp<5..5> = 1;
+        SR_tmp<4..4> = 1;
+
+        push(SR_tmp);
+
+        SR_I = 1;
+
+        var pc_lo[card(8)] = 0;
+        var pc_hi[card(8)] = 0;
+
+        load(IRQ_ADDRESS_LO, pc_lo);
+        load(IRQ_ADDRESS_HI, pc_hi);
+
+        PC = pc_hi << 8 | pc_lo;
+
+        cycle = cycle + 7;
+    }
+
+op RTI
+    syntax = "RTI"
+    image = "40"
+    action = {
+        var SR_tmp[card(8)] = 0;
+        pop(SR_tmp);
+        //bit 5 and 4 ignored
+        SR<7..6> = SR_tmp<7..6>;
+        SR<3..0> = SR_tmp<3..0>;
+
+        pop16(PC);
+        cycle = cycle + 6;
+    }

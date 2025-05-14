@@ -1,6 +1,6 @@
 op JMP = JMP_ABSOLUTE | JMP_INDIRECT
 
-op JMP_ABSOLUTE =
+op JMP_ABSOLUTE
     syntax = "JMP ABSOLUTE"
     image = "4C"
     action = {
@@ -10,7 +10,7 @@ op JMP_ABSOLUTE =
         PC = address;
     }
 
-op JMP_INDIRECT =
+op JMP_INDIRECT
     syntax = "JMP INDIRECT"
     image = "6C"
     action = {
@@ -20,7 +20,7 @@ op JMP_INDIRECT =
         PC = address;
     }
 
-op JSR =
+op JSR
     syntax = "JSR"
     image = "20"
     action = {
@@ -33,7 +33,7 @@ op JSR =
         PC = address;
     }
 
-op RTS =
+op RTS
     syntax = "RTS"
     image = "60"
     action = {

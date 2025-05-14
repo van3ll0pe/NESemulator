@@ -1,4 +1,4 @@
-op BCC = 
+op BCC
     syntax = "BCC"
     image = "90"
     action = {
@@ -17,7 +17,7 @@ op BCC =
         endif;
     }
 
-op BCS =
+op BCS
     syntax = "BCS"
     image = "B0"
     action = {
@@ -36,7 +36,7 @@ op BCS =
         endif;
     }
 
-op BEQ =
+op BEQ
     syntax = "BEQ"
     image = "F0"
     action = {
@@ -54,7 +54,7 @@ op BEQ =
         endif;
     }
 
-op BNE =
+op BNE
     syntax = "BNE"
     image = "D0"
     action = {
@@ -72,7 +72,7 @@ op BNE =
         endif;
     }
 
-op BMI =
+op BMI
     syntax = "BMI"
     image = "30"
     action = {
@@ -90,7 +90,7 @@ op BMI =
         endif;
     }
 
-op BPL = 
+op BPL 
     syntax = "BPL"
     image = "10"
     action = {
@@ -108,7 +108,7 @@ op BPL =
         endif;
     }
 
-op BVS = 
+op BVS
     syntax = "BVS"
     image = "70"
     action = {
@@ -126,7 +126,7 @@ op BVS =
         endif;
     }
 
-op BVC =
+op BVC
     syntax = "BVC"
     image = "50"
     action = {

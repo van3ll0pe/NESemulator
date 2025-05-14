@@ -1,6 +1,6 @@
 op BIT = BIT_ABSOLUTE | BIT_ZEROPAGE
 
-op BIT_ABSOLUTE =
+op BIT_ABSOLUTE
     syntax = "BIT ABSOLUTE"
     image = "2C"
     action = {
@@ -18,7 +18,7 @@ op BIT_ABSOLUTE =
         cycle = cycle + 4;
     }
 
-op BIT_ZEROPAGE = 
+op BIT_ZEROPAGE
     syntax = "BIT ZEROPAGE"
     image = "24"
     action = {
@@ -36,7 +36,7 @@ op BIT_ZEROPAGE =
         cycle = cycle + 3;
     }
 
-op NOP = 
+op NOP
     syntax = "NOP"
     image = "EA"
     action = {
