@@ -89,7 +89,7 @@ macro X_ZPG(address) =
 
 
 //ZEROPAGE Y MODE
-macro Y_ZPG() = 
+macro Y_ZPG(address) = 
     var _address[card(16)] = 0;
     load(PC, _address);
     PC = PC + 1;    
