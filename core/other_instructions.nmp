@@ -1,11 +1,11 @@
 op BIT = BIT_ABSOLUTE | BIT_ZEROPAGE
 
-op BIT_ABSOLUTE
-    syntax = "BIT ABSOLUTE"
-    image = "2C"
+op BIT_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("BIT $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x2C, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -18,12 +18,12 @@ op BIT_ABSOLUTE
         cycle = cycle + 4;
     }
 
-op BIT_ZEROPAGE
-    syntax = "BIT ZEROPAGE"
-    image = "24"
+op BIT_ZEROPAGE(address_lo : card(8))
+    syntax = format("BIT $%2x", address_lo)
+    image = format("%8b %8b", 0x24, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -38,7 +38,7 @@ op BIT_ZEROPAGE
 
 op NOP
     syntax = "NOP"
-    image = "EA"
+    image = format("%8b", 0xEA)
     action = {
         cycle = cycle + 2;
     }
