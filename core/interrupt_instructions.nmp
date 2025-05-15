@@ -1,6 +1,6 @@
 op BRK
     syntax = "BRK"
-    image = "00"
+    image = format("%8b", 0x00)
     action = {
         PC = PC + 1; //skip the extra byte
         push16(PC);
@@ -26,7 +26,7 @@ op BRK
 
 op RTI
     syntax = "RTI"
-    image = "40"
+    image = format("%8b", 0x40)
     action = {
         var SR_tmp[card(8)] = 0;
         pop(SR_tmp);
