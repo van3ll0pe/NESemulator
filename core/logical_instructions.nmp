@@ -1,12 +1,11 @@
 
 op AND = AND_IMMEDIATE | AND_ZEROPAGE | AND_ZEROPAGE_X | AND_ABSOLUTE | AND_ABSOLUTE_X | AND_ABSOLUTE_Y | AND_PRE_IND | AND_POST_IND
 
-op AND_IMMEDIATE
-    syntax = "AND IMMEDIATE"
-    image = "29"
+op AND_IMMEDIATE(value : card(8))
+    syntax = format("AND #%2x", value)
+    image = format("%8b %8b", 0x29, value)
     action = {
-        var value[card(8)] = 0;
-        IMMEDIATE(value);
+        IMMEDIATE();
         A = A & value;
         cycle = cycle + 2;
 
@@ -14,12 +13,12 @@ op AND_IMMEDIATE
         update_Z(A);
     }
 
-op AND_ZEROPAGE
-    syntax = "AND ZEROPAGE"
-    image = "25"
+op AND_ZEROPAGE(address_lo : card(8))
+    syntax = format("AND $%2x", address_lo)
+    image = format("%8b %8b", 0x25, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -30,12 +29,12 @@ op AND_ZEROPAGE
         update_Z(A);
     }
 
-op AND_ZEROPAGE_X
-    syntax = "AND ZEROPAGE X"
-    image = "35"
+op AND_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("AND $%2x, X", address_lo)
+    image = format("%8b %8b", 0x35, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -46,12 +45,12 @@ op AND_ZEROPAGE_X
         update_Z(A);
     }
 
-op AND_ABSOLUTE
-    syntax = "AND ABSOLUTE"
-    image = "2D"
+op AND_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("AND $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x2D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -62,12 +61,12 @@ op AND_ABSOLUTE
         update_Z(A);
     }
 
-op AND_ABSOLUTE_X
-    syntax = "AND ABSOLUTE X"
-    image = "3D"
+op AND_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("AND $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x3D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -78,12 +77,12 @@ op AND_ABSOLUTE_X
         update_Z(A);
     }
 
-op AND_ABSOLUTE_Y
-    syntax = "AND ABSOLUTE Y"
-    image = "39"
+op AND_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("AND $%2x%2x, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x39, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_Y(address);
+        ABS_Y(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -94,12 +93,12 @@ op AND_ABSOLUTE_Y
         update_Z(A);
     }
 
-op AND_PRE_IND
-    syntax = "AND PRE INDIRECT"
-    image = "21"
+op AND_PRE_IND(address_lo : card(8))
+    syntax = format("AND ($%2x, X)", address_lo)
+    image = format("%8b %8b", 0x21, address_lo)
     action = {
         var address[card(16)] = 0;
-        PRE_IND(address);
+        PRE_IND(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -110,12 +109,12 @@ op AND_PRE_IND
         update_Z(A);
     }
 
-op AND_POST_IND
-    syntax = "AND POST INDIRECT"
-    image = "31"
+op AND_POST_IND(address_lo : card(8))
+    syntax = format("AND ($%2x), Y", address_lo)
+    image = format("%8b %8b", 0x31, address_lo)
     action = {
         var address[card(16)] = 0;
-        POST_IND(address);
+        POST_IND(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -130,12 +129,12 @@ op AND_POST_IND
 
 op EOR = EOR_ZEROPAGE
 
-op EOR_ZEROPAGE
-    syntax = "EOR ZEROPAGE"
-    image = "52"
+op EOR_ZEROPAGE(address_lo : card(8))
+    syntax = format("EOR $%2x", address_lo)
+    image = format("%8b %8b", 0x52, address_lo)
     action = {
         var address [card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -151,12 +150,11 @@ op EOR_ZEROPAGE
 op ORA = ORA_IMMEDIATE | ORA_ZEROPAGE | ORA_ZEROPAGE_X | ORA_ABSOLUTE | ORA_ABSOLUTE_X | ORA_ABSOLUTE_Y | ORA_PRE_IND | ORA_POST_IND
 
 
-op ORA_IMMEDIATE
-    syntax = "ORA IMMEDIATE"
-    image = "09"
+op ORA_IMMEDIATE(value : card(8))
+    syntax = format("ORA #%2x", value)
+    image = format("%8b %8b", 0x09, value)
     action = {
-        var value[card(8)] = 0;
-        IMMEDIATE(value);
+        IMMEDIATE();
 
         A = A | value;
         cycle = cycle + 2;
@@ -165,12 +163,12 @@ op ORA_IMMEDIATE
         update_Z(A);
     }
 
-op ORA_ZEROPAGE
-    syntax = "ORA ZEROPAGE"
-    image = "05"
+op ORA_ZEROPAGE(address_lo : card(8))
+    syntax = format("ORA $%2x", address_lo)
+    image = format("%8b %8b", 0x05, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -181,12 +179,12 @@ op ORA_ZEROPAGE
         update_Z(A);
     }
 
-op ORA_ZEROPAGE_X
-    syntax = "ORA ZEROPAGE X"
-    image = "15"
+op ORA_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("ORA $%2x, X", address_lo)
+    image = format("%8b %8b", 0x15, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -197,12 +195,12 @@ op ORA_ZEROPAGE_X
         update_Z(A);
     }
 
-op ORA_ABSOLUTE
-    syntax = "ORA ABSOLUTE"
-    image = "0D"
+op ORA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("ORA $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x0D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         
@@ -213,12 +211,12 @@ op ORA_ABSOLUTE
         update_Z(A);
     }
 
-op ORA_ABSOLUTE_X
-    syntax = "ORA ABSOLUTE X"
-    image = "1D"
+op ORA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("ORA $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x1D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -229,12 +227,12 @@ op ORA_ABSOLUTE_X
         update_Z(A);
     }
 
-op ORA_ABSOLUTE_Y
-    syntax = "ORA ABSOLUTE Y"
-    image = "19"
+op ORA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("ORA $%2x%2x, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x19, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_Y(address);
+        ABS_Y(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -245,12 +243,12 @@ op ORA_ABSOLUTE_Y
         update_Z(A);
     }
 
-op ORA_PRE_IND
-    syntax = "ORA PRE INDIRECT"
-    image = "01"
+op ORA_PRE_IND(address_lo : card(8))
+    syntax = format("ORA ($%2x, X)", address_lo)
+    image = format("%8b %8b", 0x01, address_lo)
     action = {
         var address[card(16)] = 0;
-        PRE_IND(address);
+        PRE_IND(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
@@ -261,12 +259,12 @@ op ORA_PRE_IND
         update_Z(A);
     }
 
-op ORA_POST_IND
-    syntax = "ORA POST INDIRECT"
-    image = "11"
+op ORA_POST_IND(address_lo : card(8))
+    syntax = format("ORA ($%2x), Y", address_lo)
+    image = format("%8b %8b", 0x11, address_lo)
     action = {
         var address[card(16)] = 0;
-        POST_IND(address);
+        POST_IND(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
