@@ -1,7 +1,7 @@
 
 op INX
     syntax = "INX"
-    image = "E8"
+    image = format("%8b", 0xE8)
     action = {
         X = X + 1;
         cycle = cycle + 2;
@@ -14,7 +14,7 @@ op INX
 
 op DEX
     syntax = "DEX"
-    image = "CA"
+    image = format("%8b", 0xCA)
     action = {
         X = X - 1;
         cycle = cycle + 2;
@@ -27,7 +27,7 @@ op DEX
 
 op INY
     syntax = "INY"
-    image = "C8"
+    image = format("%8b", 0xC8)
     action = {
         Y = Y + 1;
         cycle = cycle + 2;
@@ -40,7 +40,7 @@ op INY
 
 op DEY
     syntax = "DEY"
-    image = "88"
+    image = format("%8b", 0x88)
     action = {
         Y = Y - 1;
         cycle = cycle + 2;
@@ -53,12 +53,12 @@ op DEY
 
 op INC = INC_ZEROPAGE | INC_ZEROPAGE_X | INC_ABSOLUTE | INC_ABSOLUTE_X
 
-op INC_ZEROPAGE
-    syntax = "INC ZEROPAGE"
-    image = "E6"
+op INC_ZEROPAGE(address_lo : card(8))
+    syntax = format("INC $%2x", address_lo)
+    image = format("%8b %8b", 0xE6, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         value = value + 1;
@@ -70,12 +70,12 @@ op INC_ZEROPAGE
         update_Z(value);
     }
 
-op INC_ZEROPAGE_X
-    syntax = "INC ZEROPAGE X"
-    image = "F6"
+op INC_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("INC $%2x, X", address_lo)
+    image = format("%8b %8b", 0xF6, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         value = value + 1;
@@ -87,12 +87,12 @@ op INC_ZEROPAGE_X
         update_Z(value);
     }
 
-op INC_ABSOLUTE
-    syntax = "INC ABSOLUTE"
-    image = "EE"
+op INC_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("INC $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xEE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         value = value + 1;
@@ -104,12 +104,12 @@ op INC_ABSOLUTE
         update_Z(value);
     }
 
-op INC_ABSOLUTE_X
-    syntax = "INC ABSOLUTE X"
-    image = "FE"
+op INC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("INC $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xFE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         value = value + 1;
@@ -125,12 +125,12 @@ op INC_ABSOLUTE_X
 
 op DEC = DEC_ZEROPAGE | DEC_ZEROPAGE_X | DEC_ABSOLUTE | DEC_ABSOLUTE_X
 
-op DEC_ZEROPAGE
-    syntax = "DEC ZEROPAGE"
-    image = "C6"
+op DEC_ZEROPAGE(address_lo : card(8))
+    syntax = format("DEC $%2x", address_lo)
+    image = format("%8b %8b", 0xC6, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         value = value - 1;
@@ -142,12 +142,12 @@ op DEC_ZEROPAGE
         update_Z(value);
     }
 
-op DEC_ZEROPAGE_X
-    syntax = "DEC ZEROPAGE X"
-    image = "D6"
+op DEC_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("DEC $%2x, X", address_lo)
+    image = format("%8b %8b", 0xD6, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
         value = value - 1;
@@ -159,12 +159,12 @@ op DEC_ZEROPAGE_X
         update_Z(value);
     }
 
-op DEC_ABSOLUTE
-    syntax = "DEC ABSOLUTE"
-    image = "CE"
+op DEC_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("DEC $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xCE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         value = value - 1;
@@ -176,12 +176,12 @@ op DEC_ABSOLUTE
         update_Z(value);
     }
 
-op DEC_ABSOLUTE_X 
-    syntax = "DEC ABSOLUTE X"
-    image = "DE"
+op DEC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8)) 
+    syntax = format("DEC $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xDE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         var value[card(8)] = 0;
         load(address, value);
         value = value - 1;

@@ -38,7 +38,7 @@ op CMP_ZEROPAGE_X(address_lo : card(8))
     image = format("%8b %8b", 0xD5, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address, address_lo);
+        ZPG_X(address, address_lo);
         var value[card(8)] = 0;
         load(address, value);
 
