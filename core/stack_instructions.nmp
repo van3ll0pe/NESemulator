@@ -2,7 +2,7 @@
 
 op PHA
     syntax = "PHA"
-    image = "48"
+    image = format("%8b", 0x48)
     action = {
         push(A);
         cycle = cycle + 3;
@@ -10,7 +10,7 @@ op PHA
 
 op PLA
     syntax = "PLA"
-    image = "68"
+    image = format("%8b", 0x68)
     action = {
         pop(A);
         cycle = cycle + 4;
@@ -21,7 +21,7 @@ op PLA
 
 op PHP
     syntax = "PHP"
-    image = "08"
+    image = format("%8b", 0x08)
     action = {
         var SR_tmp[card(8)]= SR;
         SR_tmp<5..5> = 1;
@@ -33,7 +33,7 @@ op PHP
 
 op PLP
     syntax = "PLP"
-    image = "28"
+    image = format("%8b", 0x28)
     action = {
         var SR_tmp[card(8)]= 0;
         pop(SR_tmp);
