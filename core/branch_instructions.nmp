@@ -1,9 +1,9 @@
-op BCC
-    syntax = "BCC"
-    image = "90"
+op BCC(offset : card(8))
+    syntax = format("BCC #%2x", offset)
+    image = format("%8b %8b", 0x90, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -17,12 +17,12 @@ op BCC
         endif;
     }
 
-op BCS
-    syntax = "BCS"
-    image = "B0"
+op BCS(offset : card(8))
+    syntax = format("BCS #%2x", offset)
+    image = format("%8b %8b", 0xB0, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -36,12 +36,12 @@ op BCS
         endif;
     }
 
-op BEQ
-    syntax = "BEQ"
-    image = "F0"
+op BEQ(offset : card(8))
+    syntax = format("BEQ #%2x", offset)
+    image = format("%8b %8b", 0xF0, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -54,12 +54,12 @@ op BEQ
         endif;
     }
 
-op BNE
-    syntax = "BNE"
-    image = "D0"
+op BNE(offset : card(8))
+    syntax = format("BNE #%2x", offset)
+    image = format("%8b %8b", 0xD0, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -72,12 +72,12 @@ op BNE
         endif;
     }
 
-op BMI
-    syntax = "BMI"
-    image = "30"
+op BMI(offset : card(8))
+    syntax = format("BMI #%2x", offset)
+    image = format("%8b %8b", 0x30, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -90,12 +90,12 @@ op BMI
         endif;
     }
 
-op BPL 
-    syntax = "BPL"
-    image = "10"
+op BPL(offset : card(8))
+    syntax = format("BPL #%2x", offset)
+    image = format("%8b %8b", 0x10, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -108,12 +108,12 @@ op BPL
         endif;
     }
 
-op BVS
-    syntax = "BVS"
-    image = "70"
+op BVS(offset : card(8))
+    syntax = format("BVS #%2x", offset)
+    image = format("%8b %8b", 0x70, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
@@ -126,12 +126,12 @@ op BVS
         endif;
     }
 
-op BVC
-    syntax = "BVC"
-    image = "50"
+op BVC(offset : card(8))
+    syntax = format("BVC #%2x", offset)
+    image = format("%8b %8b", 0x50, offset)
     action = {
         var address[card(16)] = 0;
-        REL(address);
+        REL(address, offset);
 
         cycle = cycle + 2;
 
