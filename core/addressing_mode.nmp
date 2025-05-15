@@ -35,7 +35,7 @@ macro IMMEDIATE() =
     
 
 //INDIRECT MODE
-macro IND(address, ind_address_hi, ind_address_lo) = 
+macro IND(address, ind_address_lo, ind_address_hi) = 
     PC = PC + 2;
     var ind_address[card(16)] = (ind_address_hi << 8) | ind_address_lo;
 
