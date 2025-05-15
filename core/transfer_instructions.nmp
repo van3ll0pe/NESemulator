@@ -3,12 +3,11 @@ op LDA =
 LDA_IMMEDIATE | LDA_ZEROPAGE | LDA_ZEROPAGE_X | LDA_ABSOLUTE | LDA_ABSOLUTE_X | LDA_ABSOLUTE_Y | LDA_PRE_INDIRECT | LDA_POST_INDIRECT
 
 
-op LDA_IMMEDIATE
-    syntax = "LDA immediate"
-    image = "A9"
+op LDA_IMMEDIATE(value : card(8))
+    syntax = format("LDA #%2x", value)
+    image = format("%8b %8b", 0xA9, value)
     action = {
-        var value[card(8)] = 0;
-        IMMEDIATE(value);
+        IMMEDIATE();
         A = value;
         cycle = cycle + 2;
 
@@ -17,12 +16,12 @@ op LDA_IMMEDIATE
 
     }
 
-op LDA_ZEROPAGE
-    syntax = "LDA ZEROPAGE"
-    image = "A5"
+op LDA_ZEROPAGE(address_lo : card(8))
+    syntax = format("LDA $%2x", address_lo)
+    image = format("%8b %8b", 0xA5, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         load(address, A);
         cycle = cycle + 3;
 
@@ -30,12 +29,12 @@ op LDA_ZEROPAGE
         update_Z(A);
     }
 
-op LDA_ZEROPAGE_X 
-    syntax = "LDA ZEROPAGE X"
-    image = "B5"
+op LDA_ZEROPAGE_X(address_lo : card(8)) 
+    syntax = format("LDA $%2x, X", address_lo)
+    image = format("%8b %8b", 0xB5, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         load(address, A);
         cycle = cycle + 3;
 
@@ -43,12 +42,12 @@ op LDA_ZEROPAGE_X
         update_Z(A);
     }
 
-op LDA_ABSOLUTE
-    syntax = "LDA LDA_ABSOLUTE"
-    image = "AD"
+op LDA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDA $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xAD, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         load(address, A);
         cycle = cycle + 4;
 
@@ -56,12 +55,12 @@ op LDA_ABSOLUTE
         update_Z(A);
     }
 
-op LDA_ABSOLUTE_X
-    syntax = "LDA ABSOLUTE X"
-    image = "BD"
+op LDA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDA $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xBD, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         load(address, A);
         cycle = cycle + 4;
 
@@ -69,12 +68,12 @@ op LDA_ABSOLUTE_X
         update_Z(A);
     }
 
-op LDA_ABSOLUTE_Y
-    syntax = "LDA ABSOLUTE Y"
-    image = "B9"
+op LDA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDA $%2x%2x, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xB9, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_Y(address);
+        ABS_Y(address, address_lo, address_hi);
         load(address, A);
         cycle = cycle + 4;
 
@@ -82,12 +81,12 @@ op LDA_ABSOLUTE_Y
         update_Z(A);
     }
 
-op LDA_PRE_INDIRECT
-    syntax = "LDA PRE INDIRECT"
-    image = "A1"
+op LDA_PRE_INDIRECT(address_lo : card(8))
+    syntax = format("LDA ($%2x, X)", address_lo)
+    image = format("%8b %8b", 0xA1, address_lo)
     action = {
         var address[card(16)] = 0;
-        PRE_IND(address);
+        PRE_IND(address, address_lo);
         load(address, A);
         cycle = cycle + 6;
 
@@ -95,12 +94,12 @@ op LDA_PRE_INDIRECT
         update_Z(A);
     }
 
-op LDA_POST_INDIRECT
-    syntax = "LDA POST INDIRECT"
-    image = "B1"
+op LDA_POST_INDIRECT(address_lo : card(8))
+    syntax = format("LDA ($%2x), Y", address_lo)
+    image = format("%8b %8b", 0xB1, address_lo)
     action = {
         var address[card(16)] = 0;
-        POST_IND(address);
+        POST_IND(address, address_lo);
         load(address, A);
         cycle = cycle + 5;
 
@@ -112,12 +111,11 @@ op LDA_POST_INDIRECT
 
 op LDX = LDX_IMMEDIATE | LDX_ZEROPAGE | LDX_ZEROPAGE_Y | LDX_ABSOLUTE | LDX_ABSOLUTE_Y
 
-op LDX_IMMEDIATE
-    syntax = "LDX IMMEDIATE"
-    image = "A2"
+op LDX_IMMEDIATE(value : card(8))
+    syntax = format("LDX #%2x", value)
+    image = format("%8b %8b", 0xA2, value)
     action = {
-        var value[card(8)] = 0;
-        IMMEDIATE(value);
+        IMMEDIATE();
         X = value;
         cycle = cycle + 2;
 
@@ -125,12 +123,12 @@ op LDX_IMMEDIATE
         update_Z(X);
     }
 
-op LDX_ZEROPAGE
-    syntax = "LDX ZEROPAGE"
-    image = "A6"
+op LDX_ZEROPAGE(address_lo : card(8))
+    syntax = format("LDX $%2x", address_lo)
+    image = format("%8b %8b", 0xA6, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         load(address, X);
         cycle = cycle + 3;
 
@@ -138,12 +136,12 @@ op LDX_ZEROPAGE
         update_Z(X);
     }
 
-op LDX_ZEROPAGE_Y
-    syntax = "LDX ZEROPAGE Y"
-    image = "B6"
+op LDX_ZEROPAGE_Y(address_lo : card(8))
+    syntax = format("LDX $%2x, Y", address_lo)
+    image = format("%8b %8b", 0xB6, address_lo)
     action = {
         var address[card(16)] = 0;
-        Y_ZPG(address);
+        ZPG_Y(address, address_lo);
         load(address, X);
         cycle = cycle + 4;
 
@@ -151,12 +149,12 @@ op LDX_ZEROPAGE_Y
         update_Z(X);
     }
 
-op LDX_ABSOLUTE
-    syntax = "LDX ABSOLUTE"
-    image = "AE"
+op LDX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDX $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xAE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         load(address, X);
         cycle = cycle + 4;
 
@@ -164,12 +162,12 @@ op LDX_ABSOLUTE
         update_Z(X);
     }
 
-op LDX_ABSOLUTE_Y
-    syntax = "LDX ABSOLUTE Y"
-    image = "BE"
+op LDX_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDX $%2x%2x, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xBE, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_Y(address);
+        ABS_Y(address, address_lo, address_hi);
         load(address, X);
         cycle = cycle + 4;
 
@@ -183,12 +181,11 @@ op LDX_ABSOLUTE_Y
 
 op LDY = LDY_IMMEDIATE | LDY_ZEROPAGE | LDY_ZEROPAGE_X | LDY_ABSOLUTE | LDY_ABSOLUTE_X
 
-op LDY_IMMEDIATE
-    syntax = "LDY IMMEDIATE"
-    image = "A0"
+op LDY_IMMEDIATE(value : card(8))
+    syntax = format("LDY #%2x", value)
+    image = format("%8b %8b", 0xA0, value)
     action = {
-        var value[card(8)] = 0;
-        IMMEDIATE(value);
+        IMMEDIATE();
         Y = value;
         cycle = cycle + 2;
 
@@ -196,12 +193,12 @@ op LDY_IMMEDIATE
         update_Z(Y);
     }
 
-op LDY_ZEROPAGE
-    syntax = "LDY ZEROPAGE"
-    image = "A4"
+op LDY_ZEROPAGE(address_lo : card(8))
+    syntax = format("LDY $%2x", address_lo)
+    image = format("%8b %8b", 0xA4, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         load(address, Y);
         cycle = cycle + 3;
 
@@ -209,12 +206,12 @@ op LDY_ZEROPAGE
         update_Z(Y);
     }
 
-op LDY_ZEROPAGE_X 
-    syntax = "LDY ZEROPAGE X"
-    image = "B4"
+op LDY_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("LDY $%2x, X", address_lo)
+    image = format("%8b %8b", 0xB4, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         load(address, Y);
         cycle = cycle + 4;
 
@@ -222,12 +219,12 @@ op LDY_ZEROPAGE_X
         update_Z(Y);
     }
 
-op LDY_ABSOLUTE
-    syntax = "LDY ABSOLUTE"
-    image = "AC"
+op LDY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDY $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xAC, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         load(address, Y);
         cycle = cycle + 4;
 
@@ -235,12 +232,12 @@ op LDY_ABSOLUTE
         update_Z(Y);
     }
 
-op LDY_ABSOLUTE_X
-    syntax = "LDY ABSOLUTE X"
-    image = "BC"
+op LDY_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("LDY $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0xBC, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         load(address, Y);
         cycle = cycle + 4;
 
@@ -253,73 +250,73 @@ op LDY_ABSOLUTE_X
 
 op STA = STA_ZEROPAGE | STA_ZEROPAGE_X | STA_ABSOLUTE | STA_ABSOLUTE_X | STA_ABSOLUTE_Y | STA_POST_IND | STA_PRE_IND
 
-op STA_ZEROPAGE
-    syntax = "STA ZEROPAGE"
-    image = "85"
+op STA_ZEROPAGE(address_lo : card(8))
+    syntax = format("STA $%2x", address_lo)
+    image = format("%8b %8b", 0x85, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         store(address, A);
         cycle = cycle + 3;
     }
 
-op STA_ZEROPAGE_X
-    syntax = "STA ZEROPAGE X"
-    image = "95"
+op STA_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("STA $%2x, X", address_lo)
+    image = format("%8b %8b", 0x95, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         store(address, A);
         cycle = cycle + 4;
     }
 
-op STA_ABSOLUTE
-    syntax = "STA ABSOLUTE"
-    image = "8D"
+op STA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("STA $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x8D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         store(address, A);
         cycle = cycle + 4;
     }
 
-op STA_ABSOLUTE_X
-    syntax = "STA ABSOLUTE X"
-    image = "9D"
+op STA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("STA $%2x%2x, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x9D, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_X(address);
+        ABS_X(address, address_lo, address_hi);
         store(address, A);
         cycle = cycle + 5;
     }
 
-op STA_ABSOLUTE_Y
-    syntax = "STA ABSOLUTE Y"
-    image = "99"
+op STA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("STA $%2x%2x, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x99, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS_Y(address);
+        ABS_Y(address, address_lo, address_hi);
         store(address, A);
         cycle = cycle + 5;
     }
 
-op STA_PRE_IND
-    syntax = "STA PRE INDIRECT"
-    image = "81"
+op STA_PRE_IND(address_lo : card(8))
+    syntax = format("STA ($%2x, X)", address_lo)
+    image = format("%8b %8b", 0x81, address_lo)
     action = {
         var address[card(16)] = 0;
-        PRE_IND(address);
+        PRE_IND(address, address_lo);
         store(address, A);
         cycle = cycle + 6;
     }
 
 
-op STA_POST_IND
-    syntax = "STA POST INDIRECT"
-    image = "91"
+op STA_POST_IND(address_lo : card(8))
+    syntax = format("STA ($%2x), Y", address_lo)
+    image = format("%8b %8b", 0x91, address_lo)
     action = {
         var address[card(16)] = 0;
-        POST_IND(address);
+        POST_IND(address, address_lo);
         store(address, A);
         cycle = cycle + 6;
     }
@@ -329,32 +326,32 @@ op STA_POST_IND
 op STX = STX_ZEROPAGE | STX_ZEROPAGE_Y | STX_ABSOLUTE
 
 
-op STX_ZEROPAGE
-    syntax = "STX ZEROPAGE"
-    image = "86"
+op STX_ZEROPAGE(address_lo : card(8))
+    syntax = format("STX $%2x", address_lo)
+    image = format("%8b %8b", 0x86, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         store(address, X);
         cycle = cycle + 3;
     }
 
-op STX_ZEROPAGE_Y
-    syntax = "STX ZEROPAGE Y"
-    image = "96"
+op STX_ZEROPAGE_Y(address_lo : card(8))
+    syntax = format("STX $%2x, Y", address_lo)
+    image = format("%8b %8b", 0x96, address_lo)
     action = {
         var address[card(16)] = 0;
-        Y_ZPG(address);
+        ZPG_Y(address, address_lo);
         store(address, X);
         cycle = cycle + 4;
     }
 
-op STX_ABSOLUTE
-    syntax = "STX ABSOLUTE"
-    image = "8E"
+op STX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("STX $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x8E, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         store(address, X);
         cycle = cycle + 4;
     }
@@ -363,32 +360,32 @@ op STX_ABSOLUTE
 
 op STY = STY_ZEROPAGE | STY_ZEROPAGE_X | STY_ABSOLUTE
 
-op STY_ZEROPAGE
-    syntax = "STY ZEROPAGE"
-    image = "84"
+op STY_ZEROPAGE(address_lo : card(8))
+    syntax = format("STY $%2x", address_lo)
+    image = format("%8b %8b", 0x84, address_lo)
     action = {
         var address[card(16)] = 0;
-        ZPG(address);
+        ZPG(address, address_lo);
         store(address, Y);
         cycle = cycle + 3;
     }
 
-op STY_ZEROPAGE_X
-    syntax = "STY ZEROPAGE X"
-    image = "94"
+op STY_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("STY $%2x, X", address_lo)
+    image = format("%8b %8b", 0x94, address_lo)
     action = {
         var address[card(16)] = 0;
-        X_ZPG(address);
+        ZPG_X(address, address_lo);
         store(address, Y);
         cycle = cycle + 4;
     }
 
-op STY_ABSOLUTE
-    syntax = "STY ABSOLUTE"
-    image = "8C"
+op STY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("STY $%2x%2x", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x8C, address_lo, address_hi)
     action = {
         var address[card(16)] = 0;
-        ABS(address);
+        ABS(address, address_lo, address_hi);
         store(address, Y);
         cycle = cycle + 4;
     }
@@ -397,7 +394,7 @@ op STY_ABSOLUTE
 
 op TAX
     syntax = "TAX"
-    image = "AA"
+    image = format("%8b", 0xAA)
     action = {
         X = A;
         cycle = cycle + 2;
@@ -411,7 +408,7 @@ op TAX
 
 op TAY
     syntax = "TAY"
-    image = "A8"
+    image = format("%8b", 0xA8)
     action = {
         Y = A;
         cycle = cycle + 2;
@@ -424,7 +421,7 @@ op TAY
 
 op TSX
     syntax = "TSX"
-    image = "BA"
+    image = format("%8b", 0xBA)
     action = {
         X = SP;
         cycle = cycle + 2;
@@ -437,7 +434,7 @@ op TSX
 
 op TXA
     syntax = "TXA"
-    image = "8A"
+    image = format("%8b", 0x8A)
     action = {
         A = X;
         cycle = cycle + 2;
@@ -450,7 +447,7 @@ op TXA
 
 op TXS
     syntax = "TXS"
-    image = "9A"
+    image = format("%8b", 0x9A)
     action = {
         SP = X;
         cycle = cycle + 2;
@@ -460,7 +457,7 @@ op TXS
 
 op TYA
     syntax = "TYA"
-    image = "98"
+    image = format("%8b", 0x98)
     action = {
         A = Y;
         cycle = cycle + 2;
