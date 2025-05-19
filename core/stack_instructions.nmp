@@ -5,7 +5,7 @@ op PHA
     image = format("%8b", 0x48)
     action = {
         push(A);
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op PLA
@@ -13,7 +13,7 @@ op PLA
     image = format("%8b", 0x68)
     action = {
         pop(A);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -28,7 +28,7 @@ op PHP
         SR_tmp<4..4> = 1;
 
         push(SR_tmp);
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op PLP
@@ -42,5 +42,5 @@ op PLP
         SR<7..6> = SR_tmp<7..6>;
         SR<3..0> = SR_tmp<3..0>;
 
-        cycle = cycle + 4;
+        cycle = 4;
     }

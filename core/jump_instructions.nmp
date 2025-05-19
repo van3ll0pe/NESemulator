@@ -6,7 +6,7 @@ op JMP_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     action = {
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
-        cycle = cycle + 3;
+        cycle = 3;
         PC = address;
     }
 
@@ -16,7 +16,7 @@ op JMP_INDIRECT(address_lo : card(8), address_hi : card(8))
     action = {
         var address[card(16)] = 0;
         IND(address, address_lo, address_hi);
-        cycle = cycle + 5;
+        cycle = 5;
         PC = address;
     }
 
@@ -29,7 +29,7 @@ op JSR(address_lo : card(8), address_hi : card(8))
         PC = PC - 1;
         push16(PC);
 
-        cycle = cycle + 6;
+        cycle = 6;
         PC = address;
     }
 
@@ -39,5 +39,5 @@ op RTS
     action = {
         pop16(PC);
         PC = PC + 1;
-        cycle = cycle + 6;
+        cycle = 6;
     }

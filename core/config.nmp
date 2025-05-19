@@ -11,7 +11,7 @@ let URL = ""
 //configuration
 let proc = "mos6502"
 let bit_order = "uppermost"
-let gliss_isize = "1, 2, 3"
+let gliss_isize = "8, 16, 32"
 
 // useful types
 type bit = card(1)
@@ -26,7 +26,7 @@ reg PC[1, word]
 reg SP[1, byte]
 
 var cycle[card(32)] = 0;
-
+var total_cycle[card(32)] = 0;
 
 // status register
 reg SR[1, byte]

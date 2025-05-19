@@ -1,0 +1,173 @@
+op ALR(value : card(8))
+    syntax = format("ALR #%2x", value)
+    image = format("%8b %8b", 0x4B, value)
+    action = {
+            IMMEDIATE();
+            A = A & value;
+
+            SR_C = A<0..0>;
+            A = A >> 1;
+
+            update_N(A);
+            update_Z(A);
+
+            cycle = cycle + 2;
+    }
+
+op ANC(value : card(8))
+        syntax = format("ANC #%2x", value)
+        image = format("%8b %8b", 0x0B, value)
+        action = {
+                IMMEDIATE();
+
+                A = A & value;
+                SR_C = A<7..7>;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 2;
+        }
+
+op ANC2(value : card(8))
+        syntax = format("ANC2 #%2x", value)
+        image = format("%8b %8b", 0x2B, value)
+        action = {
+                IMMEDIATE();
+
+                A = A & value;
+                SR_C = A<7..7>;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 2;
+        }
+
+
+op ARR(value : card(8))
+        syntax = format("ARR #%2x", value)
+        image = format("%8b %8b", 0x6B, value)
+        action = {
+                IMMEDIATE();
+
+                A = A & value;
+                A = (A >> 1);
+                A<7..7> = SR_C;
+                SR_C = A<6..6>;
+                update_N(A);
+                update_Z(A);
+                SR_V = A<6..6> ^ A<5..5>;
+
+                cycle = cycle + 2;
+        }
+
+op SBX(value : card(8))
+        syntax = format("SBX #%2x", value)
+        image = format("%8b %8b", 0xCB, value)
+        action = {
+                var res[card(16)] = (A & X) - value;
+                X = res<7..0>;
+                update_N(X);
+                update_Z(X);
+                update_C(res);
+
+                cycle = cycle + 2;
+        }
+
+//---------------------------------------------------------------------------------------
+
+op LAX = LAX_ZPG | LAX_ZPG_Y | LAX_ABS | LAX_ABS_Y | LAX_PRE_IND | LAX_POST_IND
+
+op LAX_ZPG(lo_address : card(8))
+        syntax = format("LAX $%2x", lo_address)
+        image = format("%8b %8b", 0xA7, lo_address)
+        action = {
+                var address[card(16)] = 0;
+                ZPG(address, lo_address);
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+                
+                cycle = cycle + 3;
+        }
+
+op LAX_ZPG_Y(lo_address: card(8))
+        syntax = format("LAX $%2x, Y", lo_address)
+        image = format("%8b %8b", 0xB7, lo_address)
+        action = {
+                var address[card(16)] = 0;
+                ZPG_Y(address, lo_address);
+
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 4;
+        }
+
+op LAX_ABS(lo_address : card(8), hi_address : card(8))
+        syntax = format("LAX $%2x%2x", hi_address, lo_address)
+        image = format("%8b %8b %8b", 0xAF, lo_address, hi_address)
+        action = {
+                var address[card(16)] = 0;
+                ABS(address, lo_address, hi_address);
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 4;
+        }
+
+op LAX_ABS_Y(lo_address : card(8), hi_address : card(8))
+        syntax = format("LAX $%2x%2x, Y", hi_address, lo_address)
+        image = format("%8b %8b %8b", 0xBF, lo_address, hi_address)
+        action = {
+                var address[card(16)] = 0;
+                ABS_Y(address, lo_address, hi_address);
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 4;
+        }
+
+op LAX_PRE_IND(lo_address : card(8))
+        syntax = format("LAX ($%2x, X)", lo_address)
+        image = format("%8b %8b", 0xA3, lo_address)
+        action = {
+                var address[card(16)] = 0;
+                PRE_IND(address, lo_address);
+
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 6;
+        }
+
+op LAX_POST_IND(lo_address : card(8))
+        syntax = format("LAX ($%2x), Y", lo_address)
+        image = format("%8b %8b", 0xB3, lo_address)
+        action = {
+                var address[card(16)] = 0;
+                POST_IND(address, lo_address);
+
+                load(address, A);
+                X = A;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = cycle + 5;
+        }

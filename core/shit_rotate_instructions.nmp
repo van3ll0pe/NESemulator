@@ -8,7 +8,7 @@ op ASL_ACCUMULATOR
 
         A = A << 1;
 
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -28,7 +28,7 @@ op ASL_ZEROPAGE(address_lo : card(8))
         value = value << 1;
         store(address, value);
 
-        cycle = cycle + 5;
+        cycle = 5;
         update_N(value);
         update_Z(value);
     }
@@ -47,7 +47,7 @@ op ASL_ZEROPAGE_X(address_lo : card(8))
         value = value << 1;
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle = 6;
         update_N(value);
         update_Z(value);
     }
@@ -66,7 +66,7 @@ op ASL_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         value = value << 1;
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle = 6;
         update_N(value);
         update_Z(value);
     }
@@ -85,7 +85,7 @@ op ASL_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
         value = value << 1;
         store(address, value);
 
-        cycle = cycle + 7;
+        cycle = 7;
         update_N(value);
         update_Z(value);
     }
@@ -103,7 +103,7 @@ op LSR_ACCUMULATOR
 
         A = A >> 1;
 
-        cycle = cycle + 2;
+        cycle = 2;
         update_Z(A);
         SR_N = 0;
     }
@@ -122,7 +122,7 @@ op LSR_ZEROPAGE(address_lo : card(8))
         value = value >> 1;
 
         store(address, value);
-        cycle = cycle + 5;
+        cycle = 5;
         SR_N = 0;
         update_Z(value);
     }
@@ -141,7 +141,7 @@ op LSR_ZEROPAGE_X(address_lo : card(8))
         value = value >> 1;
 
         store(address, value);
-        cycle = cycle + 6;
+        cycle = 6;
         SR_N = 0;
         update_Z(value);
     }
@@ -160,7 +160,7 @@ op LSR_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         value = value >> 1;
 
         store(address, value);
-        cycle = cycle + 6;
+        cycle = 6;
         SR_N = 0;
         update_Z(value);
     }
@@ -179,7 +179,7 @@ syntax = format("LSR $%2x%2x, X", address_hi, address_lo)
         value = value >> 1;
 
         store(address, value);
-        cycle = cycle + 7;
+        cycle = 7;
         SR_N = 0;
         update_Z(value);
     }
@@ -197,7 +197,7 @@ op ROL_ACCUMULATOR
         A<0..0> = SR_C;
         SR_C = carry;
 
-        cycle = cycle + 2;
+        cycle =  2;
 
         update_N(A);
         update_Z(A);
@@ -219,7 +219,7 @@ op ROL_ZEROPAGE(address_lo : card(8))
 
         store(address, value);
 
-        cycle = cycle + 5;
+        cycle = 5;
 
         update_N(value);
         update_Z(value);
@@ -241,7 +241,7 @@ op ROL_ZEROPAGE_X(address_lo : card(8))
 
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle =  6;
 
         update_N(value);
         update_Z(value);
@@ -263,7 +263,7 @@ op ROL_ABSOLUTE(address_lo : card(8), address_hi : card(8))
 
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(value);
         update_Z(value);
@@ -285,7 +285,7 @@ op ROL_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
 
         store(address, value);
 
-        cycle = cycle + 7;
+        cycle =  7;
 
         update_N(value);
         update_Z(value);
@@ -304,7 +304,7 @@ op ROR_ACCUMULATOR
         A<7..7> = SR_C;
         SR_C = carry;
 
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -326,7 +326,7 @@ op ROR_ZEROPAGE(address_lo : card(8))
 
         store(address, value);
 
-        cycle = cycle + 5;
+        cycle = 5;
 
         update_N(value);
         update_Z(value);
@@ -348,7 +348,7 @@ op ROR_ZEROPAGE_X(address_lo : card(8))
 
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(value);
         update_Z(value);
@@ -370,7 +370,7 @@ op ROR_ABSOLUTE(address_lo : card(8), address_hi : card(8))
 
         store(address, value);
 
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(value);
         update_Z(value);
@@ -392,7 +392,7 @@ op ROR_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
 
         store(address, value);
 
-        cycle = cycle + 7;
+        cycle = 7;
 
         update_N(value);
         update_Z(value);

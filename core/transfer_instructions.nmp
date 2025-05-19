@@ -9,7 +9,7 @@ op LDA_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
         A = value;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -23,7 +23,7 @@ op LDA_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         load(address, A);
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(A);
         update_Z(A);
@@ -36,7 +36,7 @@ op LDA_ZEROPAGE_X(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_X(address, address_lo);
         load(address, A);
-        cycle = cycle + 3;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -49,7 +49,7 @@ op LDA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         load(address, A);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -88,7 +88,7 @@ op LDA_PRE_INDIRECT(address_lo : card(8))
         var address[card(16)] = 0;
         PRE_IND(address, address_lo);
         load(address, A);
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(A);
         update_Z(A);
@@ -117,7 +117,7 @@ op LDX_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
         X = value;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(X);
         update_Z(X);
@@ -130,7 +130,7 @@ op LDX_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         load(address, X);
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(X);
         update_Z(X);
@@ -143,7 +143,7 @@ op LDX_ZEROPAGE_Y(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_Y(address, address_lo);
         load(address, X);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(X);
         update_Z(X);
@@ -156,7 +156,7 @@ op LDX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         load(address, X);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(X);
         update_Z(X);
@@ -187,7 +187,7 @@ op LDY_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
         Y = value;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(Y);
         update_Z(Y);
@@ -200,7 +200,7 @@ op LDY_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         load(address, Y);
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(Y);
         update_Z(Y);
@@ -213,7 +213,7 @@ op LDY_ZEROPAGE_X(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_X(address, address_lo);
         load(address, Y);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(Y);
         update_Z(Y);
@@ -226,7 +226,7 @@ op LDY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         load(address, Y);
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(Y);
         update_Z(Y);
@@ -257,7 +257,7 @@ op STA_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         store(address, A);
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op STA_ZEROPAGE_X(address_lo : card(8))
@@ -267,7 +267,7 @@ op STA_ZEROPAGE_X(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_X(address, address_lo);
         store(address, A);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 op STA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
@@ -277,7 +277,7 @@ op STA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         store(address, A);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 op STA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
@@ -287,7 +287,7 @@ op STA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS_X(address, address_lo, address_hi);
         store(address, A);
-        cycle = cycle + 5;
+        cycle = 5;
     }
 
 op STA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
@@ -297,7 +297,7 @@ op STA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS_Y(address, address_lo, address_hi);
         store(address, A);
-        cycle = cycle + 5;
+        cycle = 5;
     }
 
 op STA_PRE_IND(address_lo : card(8))
@@ -307,7 +307,7 @@ op STA_PRE_IND(address_lo : card(8))
         var address[card(16)] = 0;
         PRE_IND(address, address_lo);
         store(address, A);
-        cycle = cycle + 6;
+        cycle = 6;
     }
 
 
@@ -318,7 +318,7 @@ op STA_POST_IND(address_lo : card(8))
         var address[card(16)] = 0;
         POST_IND(address, address_lo);
         store(address, A);
-        cycle = cycle + 6;
+        cycle = 6;
     }
 
 //--------------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ op STX_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         store(address, X);
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op STX_ZEROPAGE_Y(address_lo : card(8))
@@ -343,7 +343,7 @@ op STX_ZEROPAGE_Y(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_Y(address, address_lo);
         store(address, X);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 op STX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
@@ -353,7 +353,7 @@ op STX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         store(address, X);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 //----------------------------------------------------------------------------------
@@ -367,7 +367,7 @@ op STY_ZEROPAGE(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG(address, address_lo);
         store(address, Y);
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op STY_ZEROPAGE_X(address_lo : card(8))
@@ -377,7 +377,7 @@ op STY_ZEROPAGE_X(address_lo : card(8))
         var address[card(16)] = 0;
         ZPG_X(address, address_lo);
         store(address, Y);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 op STY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
@@ -387,7 +387,7 @@ op STY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         var address[card(16)] = 0;
         ABS(address, address_lo, address_hi);
         store(address, Y);
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 //---------------------------------------------------------------------------------
@@ -397,7 +397,7 @@ op TAX
     image = format("%8b", 0xAA)
     action = {
         X = A;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(X);
         update_Z(X);
@@ -411,7 +411,7 @@ op TAY
     image = format("%8b", 0xA8)
     action = {
         Y = A;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(Y);
         update_Z(Y);
@@ -424,7 +424,7 @@ op TSX
     image = format("%8b", 0xBA)
     action = {
         X = SP;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(X);
         update_Z(X);
@@ -437,7 +437,7 @@ op TXA
     image = format("%8b", 0x8A)
     action = {
         A = X;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -450,7 +450,7 @@ op TXS
     image = format("%8b", 0x9A)
     action = {
         SP = X;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 //-------------------------------------------------------------------------------
@@ -460,7 +460,7 @@ op TYA
     image = format("%8b", 0x98)
     action = {
         A = Y;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);

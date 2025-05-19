@@ -7,7 +7,7 @@ op AND_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
         A = A & value;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -23,7 +23,7 @@ op AND_ZEROPAGE(address_lo : card(8))
         load(address, value);
         
         A = A & value;
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(A);
         update_Z(A);
@@ -39,7 +39,7 @@ op AND_ZEROPAGE_X(address_lo : card(8))
         load(address, value);
         
         A = A & value;
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -55,7 +55,7 @@ op AND_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         load(address, value);
         
         A = A & value;
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -103,7 +103,7 @@ op AND_PRE_IND(address_lo : card(8))
         load(address, value);
         
         A = A & value;
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(A);
         update_Z(A);
@@ -127,7 +127,20 @@ op AND_POST_IND(address_lo : card(8))
 
 //---------------------------------------------------------------------------------------------------
 
-op EOR = EOR_ZEROPAGE
+op EOR = EOR_IMMEDIATE | EOR_ZEROPAGE | EOR_ZEROPAGE_X | EOR_ABSOLUTE | EOR_ABSOLUTE_X | EOR_ABSOLUTE_Y | EOR_PRE_IND | EOR_POST_IND
+
+op EOR_IMMEDIATE(value : card(8))
+    syntax = format("EOR #%2x", value)
+    image = format("%8b %8b", 0x49, value)
+    action = {
+        IMMEDIATE();
+
+        A = A ^ value;
+        cycle = 2;
+
+        update_N(A);
+        update_Z(A);
+    }
 
 op EOR_ZEROPAGE(address_lo : card(8))
     syntax = format("EOR $%2x", address_lo)
@@ -139,11 +152,108 @@ op EOR_ZEROPAGE(address_lo : card(8))
         load(address, value);
 
         A = A ^ value;
+        cycle = 3;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_ZEROPAGE_X(address_lo : card(8))
+    syntax = format("EOR $%2x, X", address_lo)
+    image = format("%8b %8b", 0x55, address_lo)
+    action = {
+        var address[card(16)] = 0;
+        ZPG_X(address, address_lo);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+    syntax = format("EOR $%2x%2X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x4D, address_lo, address_hi)
+    action = {
+        var address[card(16)] = 0;
+        ABS(address, address_lo, address_hi);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+    syntax = format("EOR $%2x%2X, X", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x5D, address_lo, address_hi)
+    action = {
+        var address[card(16)] = 0;
+        ABS_X(address, address_lo, address_hi);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+    syntax = format("EOR $%2x%2X, Y", address_hi, address_lo)
+    image = format("%8b %8b %8b", 0x59, address_lo, address_hi)
+    action = {
+        var address[card(16)] = 0;
+        ABS_Y(address, address_lo, address_hi);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = cycle + 4;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_PRE_IND(address_lo : card(8))
+    syntax = format("EOR ($%2x, X)", address_lo)
+    image = format("%8b %8b", 0x41, address_lo)
+    action = {
+        var address[card(16)] = 0;
+        PRE_IND(address, address_lo);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
+        cycle = 6;
+
+        update_N(A);
+        update_Z(A);
+    }
+
+op EOR_POST_IND(address_lo: card(8))
+    syntax = format("EOR ($%2x), Y", address_lo)
+    image = format("%8b %8b", 0x51, address_lo)
+    action = {
+        var address[card(16)] = 0;
+        POST_IND_IND(address, address_lo);
+        var value[card(8)] = 0;
+        load(address, value);
+
+        A = A ^ value;
         cycle = cycle + 5;
 
         update_N(A);
         update_Z(A);
     }
+
 
 //--------------------------------------------------------------------------------------------------
 
@@ -157,7 +267,7 @@ op ORA_IMMEDIATE(value : card(8))
         IMMEDIATE();
 
         A = A | value;
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(A);
         update_Z(A);
@@ -173,7 +283,7 @@ op ORA_ZEROPAGE(address_lo : card(8))
         load(address, value);
 
         A = A | value;
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(A);
         update_Z(A);
@@ -189,7 +299,7 @@ op ORA_ZEROPAGE_X(address_lo : card(8))
         load(address, value);
 
         A = A | value;
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -205,7 +315,7 @@ op ORA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         load(address, value);
         
         A = A | value;
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(A);
         update_Z(A);
@@ -253,7 +363,7 @@ op ORA_PRE_IND(address_lo : card(8))
         load(address, value);
 
         A = A | value;
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(A);
         update_Z(A);

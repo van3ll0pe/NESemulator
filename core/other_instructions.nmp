@@ -15,7 +15,7 @@ op BIT_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         SR_N = value<7..7>;
         SR_V = value<6..6>;
 
-        cycle = cycle + 4;
+        cycle = 4;
     }
 
 op BIT_ZEROPAGE(address_lo : card(8))
@@ -33,12 +33,12 @@ op BIT_ZEROPAGE(address_lo : card(8))
         SR_N = value<7..7>;
         SR_V = value<6..6>;
 
-        cycle = cycle + 3;
+        cycle = 3;
     }
 
 op NOP
     syntax = "NOP"
     image = format("%8b", 0xEA)
     action = {
-        cycle = cycle + 2;
+        cycle =  2;
     }

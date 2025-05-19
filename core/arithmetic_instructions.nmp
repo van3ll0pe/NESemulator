@@ -8,7 +8,7 @@ op ADC_IMMEDIATE(value: card(8))
 
         var res[card(16)] = value + A + SR_C;
 
-        cycle = cycle + 2;
+        cycle = 2;
         
         update_N(res);
         update_Z(res<7..0>);
@@ -30,7 +30,7 @@ op ADC_ZEROPAGE(lo_address: card(8))
 
         var res[card(16)] = value + A + SR_C;
 
-        cycle = cycle + 3;
+        cycle = 3;
         
         update_N(res);
         update_Z(res<7..0>);
@@ -51,7 +51,7 @@ op ADC_ZEROPAGE_X(lo_address : card(8))
 
         var res[card(16)] = value + A + SR_C;
 
-        cycle = cycle + 4;
+        cycle = 4;
         
         update_N(res);
         update_Z(res<7..0>);
@@ -72,7 +72,7 @@ op ADC_ABSOLUTE(address_lo : card(8), address_hi: card(8))
 
         var res[card(16)] = value + A + SR_C;
 
-        cycle = cycle + 4;
+        cycle = 4;
         
         update_N(res);
         update_Z(res<7..0>);
@@ -135,7 +135,7 @@ op ADC_PRE_IND(address_lo : card(8))
 
         var res[card(16)] = value + A + SR_C;
 
-        cycle = cycle + 6;
+        cycle = 6;
         
         update_N(res);
         update_Z(res<7..0>);
@@ -181,7 +181,7 @@ op SBC_IMMEDIATE(value : card(8))
 
         var res[card(16)] = A + value + RS_C;
 
-        cycle = cycle + 2;
+        cycle = 2;
 
         update_N(res);
         update_Z(res<7..0>);
@@ -204,7 +204,7 @@ op SBC_ZEROPAGE(address_lo : card(8))
 
         var res[card(16)] = A + value + RS_C;
 
-        cycle = cycle + 3;
+        cycle = 3;
 
         update_N(res);
         update_Z(res<7..0>);
@@ -227,7 +227,7 @@ op SBC_ZEROPAGE_X(address_lo: card(8))
 
         var res[card(16)] = A + value + RS_C;
 
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(res);
         update_Z(res<7..0>);
@@ -250,7 +250,7 @@ op SBC_ABSOLUTE(address_lo : card(8), address_hi: card(8))
 
         var res[card(16)] = A + value + RS_C;
 
-        cycle = cycle + 4;
+        cycle = 4;
 
         update_N(res);
         update_Z(res<7..0>);
@@ -319,7 +319,7 @@ op SBC_PRE_IND(address_lo : card(8))
 
         var res[card(16)] = A + value + RS_C;
 
-        cycle = cycle + 6;
+        cycle = 6;
 
         update_N(res);
         update_Z(res<7..0>);

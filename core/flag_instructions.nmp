@@ -4,7 +4,7 @@ op CLC
     image = format("%8b", 0x18)
     action = {
         SR_C = 0;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op CLD
@@ -12,7 +12,7 @@ op CLD
     image = format("%8b", 0xD8)
     action = {
         SR_D = 0;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op CLI
@@ -20,7 +20,7 @@ op CLI
     image = format("%8b", 0x58)
     action = {
         SR_I = 0;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op CLV
@@ -28,7 +28,7 @@ op CLV
     image = format("%8b", 0xB8)
     action = {
         SR_V = 0;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op SED
@@ -36,7 +36,7 @@ op SED
     image = format("%8b", 0xF8)
     action = {
         SR_D = 1;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op SEC
@@ -44,7 +44,7 @@ op SEC
     image = format("%8b", 0x38)
     action = {
         SR_C = 1;
-        cycle = cycle + 2;
+        cycle = 2;
     }
 
 op SEI
@@ -52,5 +52,5 @@ op SEI
     image = format("%8b", 0x78)
     action = {
         SR_I = 1;
-        cycle = cycle + 2;
+        cycle = 2;
     }
