@@ -171,3 +171,113 @@ op LAX_POST_IND(lo_address : card(8))
 
                 cycle = cycle + 5;
         }
+
+//-----------------------------------------------------------------
+
+op SAX = SAX_ZEROPAGE | SAX_ZEROPAGE_Y | SAX_ABSOLUTE | SAX_PRE_INDIRECT
+
+op SAX_ZEROPAGE(address_lo : card(8))
+        syntax = format("SAX $%2x", address_lo)
+        image = format("%8b %8b", 0x87, address_lo)
+        action = {
+                var address[card(16)] = 0;
+                ZPG(address, address_lo);
+                var res[card(8)] = A & X;
+
+                store(address, res);
+                cycle = 3;
+        }
+
+op SAX_ZEROPAGE_Y(address_lo : card(8))
+        syntax = format("SAX $%2x, Y", address_lo)
+        image = format("%8b %8b", 0x97, address_lo)
+        action = {
+                var address[card(16)] = 0;
+                ZPG_Y(address, address_lo);
+                var res[card(8)] = A & X;
+
+                store(address, res);
+                cycle = 4;
+        }
+
+op SAX_ABSOLUTE(address_lo: card(8), address_hi : card(8))
+        syntax = format("SAX $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x8F, address_lo, address_hi)
+        action = {
+                var address[card(16)] = 0;
+                ABS(address, address_lo, address_hi);
+                var res[card(8)] = A & X;
+
+                store(address, res);
+                cycle = 4;
+        }
+
+op SAX_PRE_INDIRECT(address_lo : card(8))
+        syntax = format("SAX ($%2x, X)", address_lo)
+        image = format("%8b %8b", 0x83, address_lo)
+        action = {
+                var address[card(16)] = 0;
+                PRE_IND(address, address_lo);
+                var res[card(8)] = A & X;
+
+                store(address, res);
+                cycle = 6;
+        }
+
+//----------------------------------------------------------------------------------
+
+op SHX(address_lo : card(8), address_hi : card(8))
+        syntax = format("SHX $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x9E, address_lo, address_hi)
+        action = {
+                var address[card(16)] = 0;
+                ABS(address, address_lo, address_hi);
+                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
+                var res[card(8)] = X & high_byte;
+
+                store(address, res);
+                cycle = 5;
+        }
+
+op SHY(address_lo : card(8), address_hi : card(8))
+        syntax = format("SHY $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x9C, address_lo, address_hi)
+        action = {
+                var address[card(16)] = 0;
+                ABS(address, address_lo, address_hi);
+                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
+                var res[card(8)] = Y & high_byte;
+
+                store(address, res);
+                cycle = 5;
+        }
+
+//-----------------------------------------------------------
+
+op SHA = SHA_ABSOLUTE | SHA_POST_INDIRECT
+
+op SHA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("SHA $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x9F, address_lo, address_hi)
+        action = {
+                var address[card(16)] = 0;
+                ABS(address, address_lo, address_hi);
+                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
+                var res[card(8)] = A & X & high_byte;
+
+                store(address, res);
+                cycle = 5;
+        }
+
+op SHA_POST_INDIRECT(address_lo : card(8))
+        syntax = format("SHA ($%2x), Y", address_lo)
+        image = format("%8b %8b", 0x93, address_lo)
+        action = {
+                var address[card(16)] = 0;
+                POST_IND(address, address_lo);
+                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
+                var res[card(8)] = A & X & high_byte;
+
+                store(address, res);
+                cycle = 6;
+        }
