@@ -4,7 +4,7 @@ op JMP_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("JMP $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x4C, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
         cycle = 3;
         PC = address;
@@ -14,7 +14,7 @@ op JMP_INDIRECT(address_lo : card(8), address_hi : card(8))
     syntax = format("JMP ($%2x%2x)", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x6C, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         IND(address, address_lo, address_hi);
         cycle = 5;
         PC = address;
@@ -24,7 +24,7 @@ op JSR(address_lo : card(8), address_hi : card(8))
     syntax = format("JSR $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x20, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
         PC = PC - 1;
         push16(PC);

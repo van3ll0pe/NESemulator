@@ -1,13 +1,13 @@
 //addressing mode of mos6502
 
 //ABSOLUTE MODE
-macro ABS(address, address_lo, address_hi) = 
+macro ABS(address, address_lo, address_hi) =        \
     PC = PC + 2;                                    \
     address = (address_hi << 8) | address_lo;
 
 
 //ABSOLUTE, X MODE
-macro ABS_X(address, address_lo, address_hi) = 
+macro ABS_X(address, address_lo, address_hi) =      \
     PC = PC + 2;                                    \
     address = (address_hi << 8) | address_lo;       \
                                                     \
@@ -19,7 +19,7 @@ macro ABS_X(address, address_lo, address_hi) =
 
 
 //ABSOLUTE, Y MODE
-macro ABS_Y(address, address_lo, address_hi) =
+macro ABS_Y(address, address_lo, address_hi) =      \
     PC = PC + 2;                                    \
     address = (address_hi << 8) | address_lo;       \
                                                     \
@@ -30,17 +30,17 @@ macro ABS_Y(address, address_lo, address_hi) =
     address = address + Y;
 
 //IMMEDIATE VALUE MODE
-macro IMMEDIATE() =
+macro IMMEDIATE() = \
     PC = PC + 1;
     
 
 //INDIRECT MODE
-macro IND(address, ind_address_lo, ind_address_hi) = 
+macro IND(address, ind_address_lo, ind_address_hi) =                    \
     PC = PC + 2;                                                        \
-    var ind_address[card(16)] = (ind_address_hi << 8) | ind_address_lo; \
+    let ind_address : card(16) = (ind_address_hi << 8) | ind_address_lo; \
                                                                         \
-    var lo_address[card(8)]= 0;                                         \
-    var hi_address[card(8)]= 0;                                         \
+    let lo_address: card(8) = 0;                                         \
+    let hi_address: card(8) = 0;                                         \
                                                                         \
     load(ind_address, lo_address);                                      \
     load((ind_address + 1), hi_address);                                \
@@ -49,10 +49,10 @@ macro IND(address, ind_address_lo, ind_address_hi) =
 
 
 //RELATIVE MODE
-macro REL(address, offset) =
+macro REL(address, offset) =                                            \
     PC = PC + 1;                                                        \
                                                                         \
-    var _address[card(16)] = 0x0000 | offset;                           \
+    let _address: card(16) = 0x0000 | offset;                           \
                                                                         \
     if (offset & 0x80) then                                             \
         _address = 0xFF00 | offset;                                     \
@@ -62,30 +62,30 @@ macro REL(address, offset) =
 
 
 //ZEROPAGE MODE
-macro ZPG(address, lo_address) =
+macro ZPG(address, lo_address) =                                        \
     PC = PC + 1;                                                        \
     address = (0x00FF & lo_address);
 
 
 //ZEROPAGE X MODE
-macro ZPG_X(address, lo_address) =
+macro ZPG_X(address, lo_address) =                                      \
     PC = PC + 1;                                                        \
     address = (lo_address + X) & 0x00FF;
 
 
 //ZEROPAGE Y MODE
-macro ZPG_Y(address, lo_address) = 
+macro ZPG_Y(address, lo_address) =                                      \
     PC = PC + 1;                                                        \
     address = (lo_address + Y) & 0x00FF;
 
     
 //PRE INDEXED INDIRECT MODE
-macro PRE_IND(address, ind_address_lo) =
-    var _address[card(16)] = 0;                                         \
+macro PRE_IND(address, ind_address_lo) =                                \
+    let _address :card(16) = 0;                                         \
     ZPG_X(_address, ind_address_lo);                                    \
                                                                         \
-    var lo_address[card(8)]= 0;                                         \
-    var hi_address[card(8)]= 0;                                         \
+    let lo_address: card(8) = 0;                                         \
+    let hi_address: card(8) = 0;                                         \
                                                                         \
     load(_address, lo_address);                                         \
     load((_address + 1), hi_address);                                   \
@@ -93,17 +93,17 @@ macro PRE_IND(address, ind_address_lo) =
     address = ((hi_address << 8) | lo_address);
 
 //POST INDEXED INDIRECT MODE
-macro POST_IND(address, ind_address_lo) =
-    var _address[card(16)] = 0;                                         \
+macro POST_IND(address, ind_address_lo) =                               \
+    let _address: card(16) = 0;                                         \
     ZPG(_address, ind_address_lo);                                      \
                                                                         \
-    var lo_address[card(8)]= 0;                                         \
-    var hi_address[card(8)]= 0;                                         \
+    let lo_address :card(8)= 0;                                         \
+    let hi_address :card(8)= 0;                                         \
                                                                         \
     load(_address, lo_address);                                         \
     load((_address + 1), hi_address);                                   \
                                                                         \
-    var final_address[card(16)] = ((hi_address << 8) | lo_address);     \
+    let final_address : card(16) = ((hi_address << 8) | lo_address);     \
                                                                         \
     if (((final_address & 0xFF) + Y) & 0x100) then                      \
         cycle = cycle + 1;                                              \

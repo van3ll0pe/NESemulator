@@ -38,7 +38,7 @@ GFLAGS += -D \
 	-m loader:$(LOADER) \
 	-m env:void_env \
 	-m code:code \
-	-config extern/config.tpl
+	#-config extern/config.tpl
 
 NMP_MAIN = $(ARCH).nmp
 NMP = $(NMP_MAIN)

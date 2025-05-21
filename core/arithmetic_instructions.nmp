@@ -6,7 +6,7 @@ op ADC_IMMEDIATE(value: card(8))
     action = {
        IMMEDIATE();
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = 2;
         
@@ -22,13 +22,13 @@ op ADC_ZEROPAGE(lo_address: card(8))
     syntax = format("ADC $%2x", lo_address)
     image = format("%8b %8b", 0x65, lo_address)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, lo_address);
 
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = 3;
         
@@ -44,12 +44,12 @@ op ADC_ZEROPAGE_X(lo_address : card(8))
     syntax = format("ADC $%2x, X", lo_address)
     image = format("%8b %8b", 0x75, lo_address)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG_X(address, lo_address);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = 4;
         
@@ -65,12 +65,12 @@ op ADC_ABSOLUTE(address_lo : card(8), address_hi: card(8))
     syntax = format("ADC $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x6D, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = 4;
         
@@ -86,12 +86,12 @@ op ADC_ABSOLUTE_X(address_lo: card(8), address_hi : card(8))
     syntax = format("ADC $%2x%2x, X", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x7D, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_X(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = cycle + 4;
         
@@ -107,12 +107,12 @@ op ADC_ABSOLUTE_Y(address_lo : card(8), address_hi: card(8))
     syntax = format("ADC $%2x%2x, Y", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x79, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_Y(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = cycle + 4;
         
@@ -128,12 +128,12 @@ op ADC_PRE_IND(address_lo : card(8))
     syntax = format("ADC ($2x, X)", address_lo)
     image = format("%8b %8b", 0x61, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         PRE_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = 6;
         
@@ -150,12 +150,12 @@ op ADC_POST_IND(address_lo : card(8))
     syntax = format("ADC ($2x), Y", address_lo)
     image = format("%8b %8b", 0x71, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         POST_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = value + A + SR_C;
+        let res: card(16) = value + A + SR_C;
 
         cycle = cycle + 5;
         
@@ -179,7 +179,7 @@ op SBC_IMMEDIATE(value : card(8))
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = 2;
 
@@ -195,14 +195,14 @@ op SBC_ZEROPAGE(address_lo : card(8))
     syntax = format("SBC $%2x", address_lo)
     image = format("%8b %8b", 0xE5, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = 3;
 
@@ -218,14 +218,14 @@ op SBC_ZEROPAGE_X(address_lo: card(8))
     syntax = format("SBC $%2x, X", address_lo)
     image = format("%8b %8b", 0xF5, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG_X(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = 4;
 
@@ -241,14 +241,14 @@ op SBC_ABSOLUTE(address_lo : card(8), address_hi: card(8))
     syntax = format("SBC $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xED, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = 4;
 
@@ -264,14 +264,14 @@ op SBC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
     syntax = format("SBC $%2x%2x, X", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xFD, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_X(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = cycle + 4;
 
@@ -287,14 +287,14 @@ op SBC_ABSOLUTE_Y(address_lo : card(8), address_hi: card(8))
     syntax = format("SBC $%2x%2x, Y", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xF9, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_Y(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = cycle + 4;
 
@@ -310,14 +310,14 @@ op SBC_PRE_IND(address_lo : card(8))
     syntax = format("SBC ($%2x, X)", address_lo)
     image = format("%8b %8b", 0xE1, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         PRE_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = 6;
 
@@ -333,14 +333,14 @@ op SBC_POST_IND(address_lo : card(8))
     syntax = format("SBC ($%2x), Y", address_lo)
     image = format("%8b %8b", 0xF1, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         POST_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
         value = ~value;
 
-        var res[card(16)] = A + value + RS_C;
+        let res: card(16) = A + value + RS_C;
 
         cycle = cycle + 5;
 

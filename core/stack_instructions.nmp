@@ -1,6 +1,6 @@
 //stack instructions
 
-op PHA
+op PHA()
     syntax = "PHA"
     image = format("%8b", 0x48)
     action = {
@@ -8,7 +8,7 @@ op PHA
         cycle = 3;
     }
 
-op PLA
+op PLA()
     syntax = "PLA"
     image = format("%8b", 0x68)
     action = {
@@ -19,11 +19,11 @@ op PLA
         update_Z(A);
     }
 
-op PHP
+op PHP()
     syntax = "PHP"
     image = format("%8b", 0x08)
     action = {
-        var SR_tmp[card(8)]= SR;
+        let SR_tmp : card(8) = SR;
         SR_tmp<5..5> = 1;
         SR_tmp<4..4> = 1;
 
@@ -31,11 +31,11 @@ op PHP
         cycle = 3;
     }
 
-op PLP
+op PLP()
     syntax = "PLP"
     image = format("%8b", 0x28)
     action = {
-        var SR_tmp[card(8)]= 0;
+        let SR_tmp : card(8) = 0;
         pop(SR_tmp);
 
         //BIT 4 ignored

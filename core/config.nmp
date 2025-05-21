@@ -22,11 +22,13 @@ type word = card(16)
 reg A[1, byte]
 reg X[1, byte]
 reg Y[1, byte]
-reg PC[1, word]
+reg PC[1, word] is_pc = 1
 reg SP[1, byte]
 
-var cycle[card(32)] = 0;
-var total_cycle[card(32)] = 0;
+reg cycle[1, card(32)]
+reg total_cycle[1,card(32)]
+
+reg IS_JAM[1, bit]
 
 // status register
 reg SR[1, byte]
@@ -42,41 +44,41 @@ reg SR_C[1, bit] alias = SR<0..0>
 // memory
 mem M[65536, byte]
 
-let IRQ_ADDRESS_LO : card(16) = 0xFFFE;
-let IRQ_ADDRESS_HI : card(16) = 0xFFFF;
+let IRQ_ADDRESS_LO : card(16) = 0xFFFE
+let IRQ_ADDRESS_HI : card(16) = 0xFFFF
 
-let RES_ADDRESS_LO : card(16) = 0xFFFC;
-let RES_ADDRESS_HI : card(16) = 0xFFFD;
+let RES_ADDRESS_LO : card(16) = 0xFFFC
+let RES_ADDRESS_HI : card(16) = 0xFFFD
 
-let NMI_ADDRESS_LO : card(16) = 0xFFFA;
-let NMI_ADDRESS_HI : card(16) = 0xFFFB;
+let NMI_ADDRESS_LO : card(16) = 0xFFFA
+let NMI_ADDRESS_HI : card(16) = 0xFFFB
 
 
-macro store(address, data) =
+macro store(address, data) =    \
     M[address] = data;
 
-macro load(address, var) = 
+macro load(address, var) =      \
     var = M[address];
 
 
 //STACK POINTER IS ONLY 8bits on the memory plage 0x0100 - 0x01FF
 
-macro push(value) =
-    M[(0x1000 + SP)] = value;
+macro push(value) =             \
+    M[(0x1000 + SP)] = value;   \
     SP = SP - 1;
 
-macro pop(register) = 
-    SP = SP + 1;
+macro pop(register) =           \
+    SP = SP + 1;                \
     register = M[(0x1000 + SP)];
 
-macro push16(value) =
-    M[(0x1000 + SP)] = ((value & 0xFF00) >> 8);
-    SP = SP - 1;
-    M[(0x1000 + SP)] = (value & 0xFF);
-    SP = SP - 1;
+macro push16(value) =                               \
+    M[(0x1000 + SP)] = ((value & 0xFF00) >> 8);     \
+    SP = SP - 1;                                    \
+    M[(0x1000 + SP)] = (value & 0xFF);              \
+    SP = SP - 1;                        
 
-macro pop16(value) = 
-    SP = SP + 1;
-    value = M[(0x1000 + SP)];
-    SP = SP + 1;
+macro pop16(value) =                                \
+    SP = SP + 1;                                    \
+    value = M[(0x1000 + SP)];                       \
+    SP = SP + 1;                                    \
     value = value | (M((0x1000 + SP)) << 8);

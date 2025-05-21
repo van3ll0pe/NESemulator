@@ -1,5 +1,5 @@
 
-op CLC
+op CLC()
     syntax = "CLC"
     image = format("%8b", 0x18)
     action = {
@@ -7,7 +7,7 @@ op CLC
         cycle = 2;
     }
 
-op CLD
+op CLD()
     syntax = "CLD"
     image = format("%8b", 0xD8)
     action = {
@@ -15,7 +15,7 @@ op CLD
         cycle = 2;
     }
 
-op CLI
+op CLI()
     syntax = "CLI"
     image = format("%8b", 0x58)
     action = {
@@ -23,7 +23,7 @@ op CLI
         cycle = 2;
     }
 
-op CLV
+op CLV()
     syntax = "CLV"
     image = format("%8b", 0xB8)
     action = {
@@ -31,7 +31,7 @@ op CLV
         cycle = 2;
     }
 
-op SED
+op SED()
     syntax = "SED"
     image = format("%8b", 0xF8)
     action = {
@@ -39,7 +39,7 @@ op SED
         cycle = 2;
     }
 
-op SEC
+op SEC()
     syntax = "SEC"
     image = format("%8b", 0x38)
     action = {
@@ -47,7 +47,7 @@ op SEC
         cycle = 2;
     }
 
-op SEI
+op SEI()
     syntax = "SEI"
     image = format("%8b", 0x78)
     action = {

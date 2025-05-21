@@ -1,5 +1,5 @@
 
-op INX
+op INX()
     syntax = "INX"
     image = format("%8b", 0xE8)
     action = {
@@ -12,7 +12,7 @@ op INX
 
 //----------------------------------------------------------
 
-op DEX
+op DEX()
     syntax = "DEX"
     image = format("%8b", 0xCA)
     action = {
@@ -25,7 +25,7 @@ op DEX
 
 //----------------------------------------------------------
 
-op INY
+op INY()
     syntax = "INY"
     image = format("%8b", 0xC8)
     action = {
@@ -38,7 +38,7 @@ op INY
 
 //----------------------------------------------------------
 
-op DEY
+op DEY()
     syntax = "DEY"
     image = format("%8b", 0x88)
     action = {
@@ -57,9 +57,9 @@ op INC_ZEROPAGE(address_lo : card(8))
     syntax = format("INC $%2x", address_lo)
     image = format("%8b %8b", 0xE6, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value + 1;
         store(address, value);
@@ -74,9 +74,9 @@ op INC_ZEROPAGE_X(address_lo : card(8))
     syntax = format("INC $%2x, X", address_lo)
     image = format("%8b %8b", 0xF6, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG_X(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value + 1;
         store(address, value);
@@ -91,9 +91,9 @@ op INC_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("INC $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xEE, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value + 1;
         store(address, value);
@@ -108,9 +108,9 @@ op INC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
     syntax = format("INC $%2x%2x, X", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xFE, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_X(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value + 1;
         store(address, value);
@@ -129,9 +129,9 @@ op DEC_ZEROPAGE(address_lo : card(8))
     syntax = format("DEC $%2x", address_lo)
     image = format("%8b %8b", 0xC6, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value - 1;
         store(address, value);
@@ -146,9 +146,9 @@ op DEC_ZEROPAGE_X(address_lo : card(8))
     syntax = format("DEC $%2x, X", address_lo)
     image = format("%8b %8b", 0xD6, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG_X(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value - 1;
         store(address, value);
@@ -163,9 +163,9 @@ op DEC_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("DEC $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xCE, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value - 1;
         store(address, value);
@@ -180,9 +180,9 @@ op DEC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
     syntax = format("DEC $%2x%2x, X", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xDE, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_X(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
         value = value - 1;
         store(address, value);

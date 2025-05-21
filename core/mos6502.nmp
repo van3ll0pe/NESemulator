@@ -33,14 +33,19 @@ op init()
         X = 0;
         Y = 0;
         SR = 0b00100100;
+        cycle = 0;
+        total_cycle = 0;
+        IS_JAM = 0;
 	}
 
 op instruction(x: all)
     syntax  = x.syntax
     image   = x.image
     action  = {
-                PC = PC + 1;
-                x.action;
+                if IS_JAM == 1 then
+                    PC = PC + 1;
+                    x.action;
+                end if;
             }
 
 op all =

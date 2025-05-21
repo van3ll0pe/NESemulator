@@ -5,7 +5,7 @@ op BRK
         PC = PC + 1; //skip the extra byte
         push16(PC);
 
-        var SR_tmp[card(8)] = SR;
+        let SR_tmp: card(8) = SR;
         SR_tmp<5..5> = 1;
         SR_tmp<4..4> = 1;
 
@@ -13,8 +13,8 @@ op BRK
 
         SR_I = 1;
 
-        var pc_lo[card(8)] = 0;
-        var pc_hi[card(8)] = 0;
+        let pc_lo: card(8) = 0;
+        let pc_hi: card(8) = 0;
 
         load(IRQ_ADDRESS_LO, pc_lo);
         load(IRQ_ADDRESS_HI, pc_hi);
@@ -28,7 +28,7 @@ op RTI
     syntax = "RTI"
     image = format("%8b", 0x40)
     action = {
-        var SR_tmp[card(8)] = 0;
+        let SR_tmp: card(8) = 0;
         pop(SR_tmp);
         //bit 5 and 4 ignored
         SR<7..6> = SR_tmp<7..6>;

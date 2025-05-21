@@ -6,7 +6,7 @@ op CMP_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = 2;
 
@@ -19,12 +19,12 @@ op CMP_ZEROPAGE(address_lo : card(8))
     syntax = format("CMP $%2x", address_lo)
     image = format("%8b %8b", 0xC5, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = 3;
 
@@ -37,12 +37,12 @@ op CMP_ZEROPAGE_X(address_lo : card(8))
     syntax = format("CMP $%2x, X", address_lo)
     image = format("%8b %8b", 0xD5, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG_X(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = 4;
 
@@ -55,12 +55,12 @@ op CMP_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("CMP $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xCD, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = 4;
 
@@ -73,12 +73,12 @@ op CMP_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
     syntax = format("CMP $%2x%2x, X", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xDD, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_X(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = cycle + 4;
 
@@ -91,12 +91,12 @@ op CMP_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
     syntax = format("CMP $%2x%2x, Y", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xD9, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS_Y(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = cycle + 4;
 
@@ -109,12 +109,12 @@ op CMP_PRE_IND(address_lo : card(8))
     syntax = format("CMP ($%2x, X)", address_lo)
     image = format("%8b %8b", 0xC1, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         PRE_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = 6;
 
@@ -127,12 +127,12 @@ op CMP_POST_IND(address_lo : card(8))
     syntax = format("CMP ($%2x), Y", address_lo)
     image = format("%8b %8b", 0xD1, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         POST_IND(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = A - value;
+        let res: card(16) = A - value;
 
         cycle = cycle + 5;
 
@@ -151,7 +151,7 @@ op CPX_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
 
-        var res[card(16)] = X - value;
+        let res: card(16) = X - value;
 
         cycle = 2;
 
@@ -164,12 +164,12 @@ op CPX_ZEROPAGE(address_lo : card(8))
     syntax = format("CPX $%2x", address_lo)
     image = format("%8b %8b", 0xE4, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = X - value;
+        let res: card(16) = X - value;
 
         cycle = 3;
 
@@ -182,12 +182,12 @@ op CPX_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("CPX $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xEC, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = X - value;
+        let res: card(16) = X - value;
 
         cycle = 4;
 
@@ -207,7 +207,7 @@ op CPY_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
 
-        var res[card(16)] = Y - value;
+        let res: card(16) = Y - value;
 
         cycle = 2;
 
@@ -220,12 +220,12 @@ op CPY_ZEROPAGE(address_lo : card(8))
     syntax = format("CPY $%2x", address_lo)
     image = format("%8b %8b", 0xC4, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = Y - value;
+        let res: card(16) = Y - value;
 
         cycle = 3;
 
@@ -238,12 +238,12 @@ op CPY_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("CPY $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0xCC, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(16)] = Y - value;
+        let res: card(16) = Y - value;
 
         cycle = 4;
 

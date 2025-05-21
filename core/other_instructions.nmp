@@ -4,12 +4,12 @@ op BIT_ABSOLUTE(address_lo : card(8), address_hi : card(8))
     syntax = format("BIT $%2x%2x", address_hi, address_lo)
     image = format("%8b %8b %8b", 0x2C, address_lo, address_hi)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ABS(address, address_lo, address_hi);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(8)] = A & value;
+        let res: card(8) = A & value;
 
         update_Z(res);
         SR_N = value<7..7>;
@@ -22,12 +22,12 @@ op BIT_ZEROPAGE(address_lo : card(8))
     syntax = format("BIT $%2x", address_lo)
     image = format("%8b %8b", 0x24, address_lo)
     action = {
-        var address[card(16)] = 0;
+        let address: card(16) = 0;
         ZPG(address, address_lo);
-        var value[card(8)] = 0;
+        let value: card(8) = 0;
         load(address, value);
 
-        var res[card(8)] = A & value;
+        let res: card(8) = A & value;
 
         update_Z(res);
         SR_N = value<7..7>;

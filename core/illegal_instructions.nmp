@@ -66,7 +66,7 @@ op SBX(value : card(8))
         syntax = format("SBX #%2x", value)
         image = format("%8b %8b", 0xCB, value)
         action = {
-                var res[card(16)] = (A & X) - value;
+                let res: card(16) = (A & X) - value;
                 X = res<7..0>;
                 update_N(X);
                 update_Z(X);
@@ -83,7 +83,7 @@ op LAX_ZPG(lo_address : card(8))
         syntax = format("LAX $%2x", lo_address)
         image = format("%8b %8b", 0xA7, lo_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG(address, lo_address);
                 load(address, A);
                 X = A;
@@ -98,7 +98,7 @@ op LAX_ZPG_Y(lo_address: card(8))
         syntax = format("LAX $%2x, Y", lo_address)
         image = format("%8b %8b", 0xB7, lo_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG_Y(address, lo_address);
 
                 load(address, A);
@@ -114,7 +114,7 @@ op LAX_ABS(lo_address : card(8), hi_address : card(8))
         syntax = format("LAX $%2x%2x", hi_address, lo_address)
         image = format("%8b %8b %8b", 0xAF, lo_address, hi_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, lo_address, hi_address);
                 load(address, A);
                 X = A;
@@ -129,7 +129,7 @@ op LAX_ABS_Y(lo_address : card(8), hi_address : card(8))
         syntax = format("LAX $%2x%2x, Y", hi_address, lo_address)
         image = format("%8b %8b %8b", 0xBF, lo_address, hi_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS_Y(address, lo_address, hi_address);
                 load(address, A);
                 X = A;
@@ -144,7 +144,7 @@ op LAX_PRE_IND(lo_address : card(8))
         syntax = format("LAX ($%2x, X)", lo_address)
         image = format("%8b %8b", 0xA3, lo_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 PRE_IND(address, lo_address);
 
                 load(address, A);
@@ -160,7 +160,7 @@ op LAX_POST_IND(lo_address : card(8))
         syntax = format("LAX ($%2x), Y", lo_address)
         image = format("%8b %8b", 0xB3, lo_address)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 POST_IND(address, lo_address);
 
                 load(address, A);
@@ -180,9 +180,9 @@ op SAX_ZEROPAGE(address_lo : card(8))
         syntax = format("SAX $%2x", address_lo)
         image = format("%8b %8b", 0x87, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG(address, address_lo);
-                var res[card(8)] = A & X;
+                let res: card(8) = A & X;
 
                 store(address, res);
                 cycle = 3;
@@ -192,9 +192,9 @@ op SAX_ZEROPAGE_Y(address_lo : card(8))
         syntax = format("SAX $%2x, Y", address_lo)
         image = format("%8b %8b", 0x97, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG_Y(address, address_lo);
-                var res[card(8)] = A & X;
+                let res: card(8) = A & X;
 
                 store(address, res);
                 cycle = 4;
@@ -204,9 +204,9 @@ op SAX_ABSOLUTE(address_lo: card(8), address_hi : card(8))
         syntax = format("SAX $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x8F, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var res[card(8)] = A & X;
+                let res: card(8) = A & X;
 
                 store(address, res);
                 cycle = 4;
@@ -216,9 +216,9 @@ op SAX_PRE_INDIRECT(address_lo : card(8))
         syntax = format("SAX ($%2x, X)", address_lo)
         image = format("%8b %8b", 0x83, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 PRE_IND(address, address_lo);
-                var res[card(8)] = A & X;
+                let res: card(8) = A & X;
 
                 store(address, res);
                 cycle = 6;
@@ -230,10 +230,10 @@ op SHX(address_lo : card(8), address_hi : card(8))
         syntax = format("SHX $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x9E, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
-                var res[card(8)] = X & high_byte;
+                let high_byte: card(8) = ((address + 1) & 0xFF00) >> 8;
+                let res: card(8) = X & high_byte;
 
                 store(address, res);
                 cycle = 5;
@@ -243,10 +243,10 @@ op SHY(address_lo : card(8), address_hi : card(8))
         syntax = format("SHY $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x9C, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
-                var res[card(8)] = Y & high_byte;
+                let high_byte: card(8) = ((address + 1) & 0xFF00) >> 8;
+                let res: card(8) = Y & high_byte;
 
                 store(address, res);
                 cycle = 5;
@@ -260,10 +260,10 @@ op SHA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         syntax = format("SHA $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x9F, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
-                var res[card(8)] = A & X & high_byte;
+                let high_byte: card(8) = ((address + 1) & 0xFF00) >> 8;
+                let res: card(8) = A & X & high_byte;
 
                 store(address, res);
                 cycle = 5;
@@ -273,10 +273,10 @@ op SHA_POST_INDIRECT(address_lo : card(8))
         syntax = format("SHA ($%2x), Y", address_lo)
         image = format("%8b %8b", 0x93, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 POST_IND(address, address_lo);
-                var high_byte[card(8)] = ((address + 1) & 0xFF00) >> 8;
-                var res[card(8)] = A & X & high_byte;
+                let high_byte: card(8) = ((address + 1) & 0xFF00) >> 8;
+                let res: card(8) = A & X & high_byte;
 
                 store(address, res);
                 cycle = 6;
@@ -290,15 +290,15 @@ op DCP_ZEROPAGE(address_lo : card(8))
         syntax = format("DCP $%2x", address_lo)
         image = format("%8b %8b", 0xC7, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -311,15 +311,15 @@ op DCP_ZEROPAGE_X(address_lo : card(8))
         syntax = format("DCP $%2x, X", address_lo)
         image = format("%8b %8b", 0xD7, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG_X(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -332,15 +332,15 @@ op DCP_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         syntax = format("DCP $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xCF, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -353,15 +353,15 @@ op DCP_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
         syntax = format("DCP $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xDF, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS_X(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -374,15 +374,15 @@ op DCP_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
         syntax = format("DCP $%2x%2x, Y", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xDB, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS_Y(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -395,15 +395,15 @@ op DCP_PRE_INDIRECT(address_lo : card(8))
         syntax = format("DCP ($%2x, X)", address_lo)
         image = format("%8b %8b", 0xC3, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 PRE_IND(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -416,15 +416,15 @@ op DCP_POST_INDIRECT(address_lo : card(8))
         syntax = format("DCP ($%2x), Y", address_lo)
         image = format("%8b %8b", 0xD3, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 POST_IND(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value - 1;
                 store(address, value);
 
-                var res[card(16)] = A - M;
+                let res: card(16) = A - M;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -441,16 +441,16 @@ op ISC_ZEROPAGE(address_lo : card(8))
         syntax = format("ISC $%2x", address_lo)
         image = format("%8b %8b", 0xE7, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                 
                 update_C(res);
                 update_N(res);
@@ -466,16 +466,16 @@ op ISC_ZEROPAGE_X(address_lo : card(8))
         syntax = format("ISC $%2x, X", address_lo)
         image = format("%8b %8b",0xF7 address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ZPG_X(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -492,16 +492,16 @@ op ISC_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         syntax = format("ISC $%2x%2x", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xEF, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -518,16 +518,16 @@ op ISC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
         syntax = format("ISC $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xFF, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS_X(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -544,16 +544,16 @@ op ISC_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
         syntax = format("ISC $%2x%2x, Y", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xFB, address_lo, address_hi)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 ABS_Y(address, address_lo, address_hi);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -570,16 +570,16 @@ op ISC_PRE_IND(address_lo : card(8))
         syntax = format("ISC ($%2x, X)", address_lo)
         image = format("%8b %8b", 0xE3, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 PRE_IND(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -596,16 +596,16 @@ op ISC_POST_IND(address_lo : card(8))
         syntax = format("ISC ($%2x), Y", address_lo)
         image = format("%8b %8b", 0xF3, address_lo)
         action = {
-                var address[card(16)] = 0;
+                let address: card(16) = 0;
                 POST_IND(address, address_lo);
-                var value[card(8)] = 0;
+                let value: card(8) = 0;
                 load(address, value);
 
                 value = value + 1;
                 store(address, value);
 
                 value = ~value;
-                var res[card(16)] = A + value + SR_C;
+                let res: card(16) = A + value + SR_C;
                
 
                 update_C(res);
@@ -616,4 +616,773 @@ op ISC_POST_IND(address_lo : card(8))
                 A = res<7..0>;
 
                 cycle = 8;
+        }
+
+//-----------------------------------------------------------------
+
+
+op TAS(address_lo : card(8), address_hi : card(8))
+        syntax = format("TAS $%2x%2x, Y", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x9B, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_Y(address, address_lo, address_hi);
+                
+                SP = A & X;
+
+                let value: card(8) = A & X & (((address + 1) & 0xFF00) >> 8);
+
+                store(address, value);
+
+                cycle = 5;
+        }
+
+//------------------------------------------------------------------
+
+op SRE = SRE_ZEROPAGE | SRE_ZEROPAGE_X | SRE_ABSOLUTE | SRE_ABSOLUTE_X | SRE_ABSOLUTE_Y | SRE_PRE_IND | SRE_POST_IND
+
+op SRE_ZEROPAGE(address_lo : card(8))
+        syntax = format("SRE $%2x", address_lo)
+        image = format("%8b %8b", 0x47, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 5;
+        }
+
+op SRE_ZEROPAGE_X(address_lo : card(8))
+        syntax = format("SRE $%2x, X", address_lo)
+        image = format("%8b %8b", 0x57, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG_X(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op SRE_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("SRE $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x4F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op SRE_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+        syntax = format("SRE $%2x%2x, X", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x5F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op SRE_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+        syntax = format("SRE $%2x%2x, Y", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x5B, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op SRE_PRE_IND(address_lo : card(8))
+        syntax = format("SRE ($%2x, X)", address_lo)
+        image = format("%8b %8b", 0x43, address_lo)
+        action = {
+                let address: card(16) = 0;
+                PRE_IND(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+op SRE_POST_IND(address_lo : card(8))
+        syntax = format("SRE ($%2x), Y", address_lo)
+        image = format("%8b %8b", 0x53, address_lo)
+        action = {
+                let address: card(16) = 0;
+                POST_IND(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                SR_C = value<0..0>;
+                value = value >> 1;
+
+                store(address, value);
+                A = A ^ value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+//-----------------------------------------------------------
+
+op RRA = RRA_ZEROPAGE | RRA_ZEROPAGE_X | RRA_ABSOLUTE | RRA_ABSOLUTE_X | RRA_ABSOLUTE_Y | RRA_PRE_INDIRECT | RRA_POST_INDIRECT
+
+op RRA_ZEROPAGE(address_lo : card(8))
+        syntax = format("RRA $%2x", address_lo)
+        image = format("%8b %8b", 0x67, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+
+
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 5;
+        }
+
+op RRA_ZEROPAGE_X(address_lo : card(8))
+        syntax = format("RRA $%2x, X", address_lo)
+        image = format("%8b %8b", 0x77, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG_X(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 6;
+        }
+
+op RRA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("RRA $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x6F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 6;
+        }
+
+op RRA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+        syntax = format("RRA $%2x%2x, X", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x7F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 7;
+        }
+
+op RRA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+        syntax = format("RRA $%2x%2x, Y", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x7B, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_Y(address, address_lo, address_hi);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 7;
+        }
+
+op RRA_PRE_INDIRECT(address_lo : card(8))
+        syntax = format("RRA ($%2x,X)", address_lo)
+        image = format("%8b %8b", 0x63, address_lo)
+        action = {
+                let address: card(16) = 0;
+                PRE_IND(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 8;
+        }
+
+op RRA_POST_INDIRECT(address_lo : card(8))
+        syntax = format("RRA ($%2x),Y", address_lo)
+        image = format("%8b %8b", 0x73, address_lo)
+        action = {
+                let address: card(16) = 0;
+                POST_IND(address, address_lo);
+                let value: card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<0..0>;
+                value = value >> 1;
+                value<7..7> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                let res: card(16) = A + value + SR_C;
+
+                update_C(res);
+                update_N(res);
+                update_Z(res<7..0>);
+                update_V(value, A, res);
+
+                A = res<7..0>;
+                cycle = 8;
+        }
+
+//------------------------------------------------------------------------------------
+
+op RLA = RLA_ZEROPAGE | RLA_ZEROPAGE_X | RLA_ABSOLUTE | RLA_ABSOLUTE_X | RLA_ABSOLUTE_Y | RLA_PRE_INDIRECT | RLA_POST_INDIRECT
+
+op RLA_ZEROPAGE(address_lo : card(8))
+        syntax = format("RLA $%2x", address_lo)
+        image = format("%8b %8b", 0x27, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 5;
+        }
+
+op RLA_ZEROPAGE_X(address_lo : card(8))
+        syntax = format("RLA $%2x, X", address_lo)
+        image = format("%8b %8b", 0x37, address_lo)
+        action = {
+                let address: card(16) = 0;
+                ZPG_X(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op RLA_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("RLA $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x2F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op RLA_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+        syntax = format("RLA $%2x%2x, X", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x3F, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op RLA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+        syntax = format("RLA $%2x%2x, Y", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x3B, address_lo, address_hi)
+        action = {
+                let address: card(16) = 0;
+                ABS_Y(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op RLA_PRE_INDIRECT(address_lo : card(8))
+        syntax = format("RLA ("$%2x, X)", address_lo)
+        image = format("%8b %8b", 0x23, address_lo)
+        action = {
+                let address: card(16) = 0;
+                PRE_IND(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+op RLA_POST_INDIRECT(address_lo : card(8))
+        syntax = format("RLA ($%2x), Y", address_lo)
+        image = format("%8b %8b", 0x33, address_lo)
+        action = {
+                let address: card(16) = 0;
+                POST_IND(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                let carry : card(1) = value<7..7>;
+                value = value << 1;
+                value<0..0> = SR_C;
+                SR_C = carry;
+                store(address, value);
+                A = A & value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+//-------------------------------------------------------------
+
+op SLO = SLO_ZEROPAGE | SLO_ZEROPAGE_X | SLO_ABSOLUTE | SLO_ABSOLUTE_X | SLO_ABSOLUTE_Y | SLO_PRE_INDIRECT | SLO_POST_INDIRECT
+
+
+op SLO_ZEROPAGE(address_lo : card(8))
+        syntax = format("SLO $%2x", address_lo)
+        image = format("%8b %8b", 0x07, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 5;
+        }
+
+op SLO_ZEROPAGE_X(address_lo : card(8))
+        syntax = format("SLO $%2x, X", address_lo)
+        image = format("%8b %8b", 0x17, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op SLO_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("SLO $%2x%2x",address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x0F, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 6;
+        }
+
+op SLO_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
+        syntax = format("SLO $%2x%2x, X",address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x1F, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op SLO_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
+        syntax = format("SLO $%2x%2x, Y",address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x1B, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_Y(address, address_lo, address_hi);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 7;
+        }
+
+op SLO_PRE_INDIRECT(address_lo : card(8))
+        syntax = format("SLO ($%2x, X)", address_lo)
+        image = format("%8b %8b", 0x03, address_lo)
+        action = {
+                let address : card(16) = 0;
+                PRE_IND(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+op SLO_POST_INDIRECT(address_lo : card(8))
+        syntax = format("SLO ($%2x), Y", address_lo)
+        image = format("%8b %8b", 0x13, address_lo)
+        action = {
+                let address : card(16) = 0;
+                POST_IND(address, address_lo);
+                let value : card(8) = 0;
+                load(address, value);
+
+                SR_C = value<7..7>;
+                value = value << 1;
+                store(address, value);
+
+                A = A | value;
+
+                update_N(A);
+                update_Z(A);
+
+                cycle = 8;
+        }
+
+//---------------------------------------------------------------
+
+op USBC(value : card(8))
+        syntax = format("USBC #%2x", value)
+        image = format("%8b %8b", 0xEB, value)
+        action = {
+                value = ~value;
+
+                let res: card(16) = A + value + RS_C;
+
+                cycle = 2;
+
+                update_N(res);
+                update_Z(res<7..0>);
+                update_C(res);
+                update_V(value, A, res<7..0>);
+
+                A = res<7..0>;
+        }
+
+//--------------------------------------------------------------
+
+op JAM = JAM_02 | JAM_12 | JAM_22 | JAM_32 | JAM_42 | JAM_52 | JAM_62 | JAM_72 | JAM_92 | JAM_B2 | JAM_D2 | JAM_F2
+
+op JAM_02()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_12()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_22()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_32()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_42()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_52()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_62()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_72()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_92()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_B2()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_D2()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
+        }
+
+op JAM_F2()
+        syntax = format("JAM")
+        image = format("%8b", 0x02)
+        action = {
+                IS_JAM = 1;
         }
