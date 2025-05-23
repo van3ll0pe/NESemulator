@@ -1,6 +1,20 @@
-macro NMI() = \
+op exceptions = IRQ | NMI | RESET
+
+op IRQ()
+    action = {
+
+    }
+    is_irq = 1
 
 
-macro IRQ() = \
+op NMI()
+    action = {
 
-macro RESET() = \
+    }
+    is_irq = 1
+
+op RESET()
+    action = {
+
+    }
+    is_irq = 1
