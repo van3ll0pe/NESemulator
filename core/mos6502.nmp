@@ -6,8 +6,6 @@ let BUILDER = "atmel"
 let LICENSE = "GPL"
 let COPYRIGHT = "University of Toulouse"
 let YEAR = "2025"
-let URL = ""
-let gliss_isize = "8, 16, 24"
 
 
 include "addressing_mode.nmp"

@@ -11,7 +11,7 @@ let URL = ""
 //configuration
 let proc = "mos6502"
 let bit_order = "uppermost"
-let gliss_isize = "8, 16, 24"
+let gliss_isize = "8,16,24"
 
 // useful types
 type bit = card(1)

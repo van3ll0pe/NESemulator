@@ -298,7 +298,7 @@ op DCP_ZEROPAGE(address_lo : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -319,7 +319,7 @@ op DCP_ZEROPAGE_X(address_lo : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -340,7 +340,7 @@ op DCP_ABSOLUTE(address_lo : card(8), address_hi : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -361,7 +361,7 @@ op DCP_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -382,7 +382,7 @@ op DCP_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -403,7 +403,7 @@ op DCP_PRE_INDIRECT(address_lo : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
@@ -424,7 +424,7 @@ op DCP_POST_INDIRECT(address_lo : card(8))
                 value = value - 1;
                 store(address, value);
 
-                let res: card(16) = A - M;
+                let res: card(16) = A - value;
 
                 update_N(res<7..0>);
                 update_Z(res<7..0>);
