@@ -1533,3 +1533,103 @@ op IGN_ZEROPAGE_X_F4(address_lo : card(8))
 
                 cycle = 4;
         }
+
+//-------------------------------------------------------------------
+
+op JAM = JAM_02 | JAM_12 | JAM_22 | JAM_32 | JAM_42 | JAM_52 | JAM_62 | JAM_72 | JAM_92 | JAM_B2 | JAM_D2 | JAM_F2
+
+op JAM_02()
+        syntax = "JAM"
+        image = format("%8b", 0x02)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_12()
+        syntax = "JAM"
+        image = format("%8b", 0x12)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_22()
+        syntax = "JAM"
+        image = format("%8b", 0x22)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_32()
+        syntax = "JAM"
+        image = format("%8b", 0x32)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_42()
+        syntax = "JAM"
+        image = format("%8b", 0x42)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_52()
+        syntax = "JAM"
+        image = format("%8b", 0x52)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_62()
+        syntax = "JAM"
+        image = format("%8b", 0x62)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_72()
+        syntax = "JAM"
+        image = format("%8b", 0x72)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_92()
+        syntax = "JAM"
+        image = format("%8b", 0x92)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_B2()
+        syntax = "JAM"
+        image = format("%8b", 0xB2)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_D2()
+        syntax = "JAM"
+        image = format("%8b", 0xD2)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }
+
+op JAM_F2()
+        syntax = "JAM"
+        image = format("%8b", 0xF2)
+        action = {
+                cycle = 1;
+                is_jam = 1;
+        }

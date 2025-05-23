@@ -36,15 +36,18 @@ op init()
         SR = 0b00100100;
         cycle = 0;
         total_cycle = 0;
+        is_jam = 0;
 	}
 
 op instruction(x: all)
     syntax  = x.syntax
     image   = x.image
     action  = {
-                    PC = PC + 1;
-                    x.action;
-                    total_cycle = total_cycle + cycle;
+                    if is_jam == 0 then
+                        PC = PC + 1;
+                        x.action;
+                        total_cycle = total_cycle + cycle;
+                    endif;
             }
 
 op all =
@@ -60,5 +63,5 @@ BCC | BCS | BEQ | BMI | BNE | BPL | BVC | BVS |
 JMP | JSR | RTS |
 BIT | NOP |
 ALR | ANC | ANC2| ARR | SBX | LAX | SAX | SHX | SHY | SHA | DCP | ISC | SRE | RRA | RLA | SLO |
-USBC| NOP_ILLEGAL | SKB | IGN
+USBC| NOP_ILLEGAL | SKB | IGN | JAM
 //list of instruction

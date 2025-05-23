@@ -28,6 +28,8 @@ reg SP[1, byte]
 reg cycle[1, card(32)]
 reg total_cycle[1,card(32)]
 
+reg is_jam[1, card(1)]
+
 // status register
 reg SR[1, byte]
 reg SR_N[1, bit] alias = SR<7..7>
