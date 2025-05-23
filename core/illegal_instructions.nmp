@@ -618,24 +618,6 @@ op ISC_POST_IND(address_lo : card(8))
                 cycle = 8;
         }
 
-//-----------------------------------------------------------------
-
-
-op TAS(address_lo : card(8), address_hi : card(8))
-        syntax = format("TAS $%2x%2x, Y", address_hi, address_lo)
-        image = format("%8b %8b %8b", 0x9B, address_lo, address_hi)
-        action = {
-                let address: card(16) = 0;
-                ABS_Y(address, address_lo, address_hi);
-                
-                SP = A & X;
-
-                let value: card(8) = A & X & (((address + 1) & 0xFF00) >> 8);
-
-                store(address, value);
-
-                cycle = 5;
-        }
 
 //------------------------------------------------------------------
 
@@ -1299,90 +1281,249 @@ op USBC(value : card(8))
                 A = res<7..0>;
         }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------
 
-op JAM = JAM_02 | JAM_12 | JAM_22 | JAM_32 | JAM_42 | JAM_52 | JAM_62 | JAM_72 | JAM_92 | JAM_B2 | JAM_D2 | JAM_F2
+op NOP_ILLEGAL = NOP_1A | NOP_3A | NOP_5A | NOP_7A | NOP_DA | NOP_FA 
 
-op JAM_02()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_1A()
+        syntax = "NOP"
+        image = format("%8b", 0x1A)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_12()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_3A()
+        syntax = "NOP"
+        image = format("%8b", 0x3A)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_22()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_5A()
+        syntax = "NOP"
+        image = format("%8b", 0x5A)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_32()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_7A()
+        syntax = "NOP"
+        image = format("%8b", 0x7A)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_42()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_DA()
+        syntax = "NOP"
+        image = format("%8b", 0xDA)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_52()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op NOP_FA()
+        syntax = "NOP"
+        image = format("%8b", 0xFA)
         action = {
-                IS_JAM = 1;
+                cycle = 2;
         }
 
-op JAM_62()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+//-------------------------------------------------------------------
+
+op SKB = SKB_80 | SKB_82 | SKB_89 | SKB_C2 | SKB_E2
+
+op SKB_80(value : card(8))
+        syntax = format("SKB #%2x", value)
+        image = format("%8b %8b", 0x80, value)
         action = {
-                IS_JAM = 1;
+                IMMEDIATE();
+                cycle = 2;
         }
 
-op JAM_72()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op SKB_82(value : card(8))
+        syntax = format("SKB #%2x", value)
+        image = format("%8b %8b", 0x82, value)
         action = {
-                IS_JAM = 1;
+                IMMEDIATE();
+                cycle = 2;
         }
 
-op JAM_92()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op SKB_89(value : card(8))
+        syntax = format("SKB #%2x", value)
+        image = format("%8b %8b", 0x89, value)
         action = {
-                IS_JAM = 1;
+                IMMEDIATE();
+                cycle = 2;
         }
 
-op JAM_B2()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op SKB_C2(value : card(8))
+        syntax = format("SKB #%2x", value)
+        image = format("%8b %8b", 0xC2, value)
         action = {
-                IS_JAM = 1;
+                IMMEDIATE();
+                cycle = 2;
         }
 
-op JAM_D2()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+op SKB_E2(value : card(8))
+        syntax = format("SKB #%2x", value)
+        image = format("%8b %8b", 0xE2, value)
         action = {
-                IS_JAM = 1;
+                IMMEDIATE();
+                cycle = 2;
         }
 
-op JAM_F2()
-        syntax = format("JAM")
-        image = format("%8b", 0x02)
+//------------------------------------------------------
+
+op IGN = IGN_ABSOLUTE | IGN_ABSOLUTE_X_1C | IGN_ABSOLUTE_X_3C | IGN_ABSOLUTE_X_5C | IGN_ABSOLUTE_X_7C | IGN_ABSOLUTE_X_DC | IGN_ABSOLUTE_X_FC | IGN_ZEROPAGE_04 | IGN_ZEROPAGE_44 | IGN_ZEROPAGE_64 | IGN_ZEROPAGE_X_14 | IGN_ZEROPAGE_X_34 | IGN_ZEROPAGE_X_54 | IGN_ZEROPAGE_X_74 | IGN_ZEROPAGE_X_D4 | IGN_ZEROPAGE_X_F4
+
+op IGN_ABSOLUTE(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2x", address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x0C, address_lo, address_hi)
         action = {
-                IS_JAM = 1;
+                let address : card(16) = 0;
+                ABS(address, address_lo, address_hi);
+                cycle = 4;
+        }
+
+op IGN_ABSOLUTE_X_1C(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x1C, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ABSOLUTE_X_3C(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x3C, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ABSOLUTE_X_5C(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x5C, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ABSOLUTE_X_7C(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0x7C, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ABSOLUTE_X_DC(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0xDC, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ABSOLUTE_X_FC(address_lo : card(8), address_hi : card(8))
+        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        image = format("%8b %8b %8b", 0xFC, address_lo, address_hi)
+        action = {
+                let address : card(16) = 0;
+                ABS_X(address, address_lo, address_hi);
+
+                cycle = cycle + 4;
+        }
+
+op IGN_ZEROPAGE_04(address_lo : card(8))
+        syntax = format("IGN $%2x", address_lo)
+        image = format("%8b %8b", 0x04, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG(address, address_lo);
+
+                cycle = 3;
+        }
+
+op IGN_ZEROPAGE_44(address_lo : card(8))
+        syntax = format("IGN $%2x", address_lo)
+        image = format("%8b %8b", 0x44, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG(address, address_lo);
+
+                cycle = 3;
+        }
+
+op IGN_ZEROPAGE_64(address_lo : card(8))
+        syntax = format("IGN $%2x", address_lo)
+        image = format("%8b %8b", 0x64, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG(address, address_lo);
+
+                cycle = 3;
+        }
+
+op IGN_ZEROPAGE_X_14(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0x14, address_lo)
+
+op IGN_ZEROPAGE_X_34(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0x34, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
+        }
+
+op IGN_ZEROPAGE_X_54(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0x54, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
+        }
+
+op IGN_ZEROPAGE_X_74(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0x74, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
+        }
+
+op IGN_ZEROPAGE_X_D4(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0xD4, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
+        }
+
+op IGN_ZEROPAGE_X_F4(address_lo : card(8))
+        syntax = format("IGN $%2x, X", address_lo)
+        image = format("%8b %8b", 0xF4, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
         }

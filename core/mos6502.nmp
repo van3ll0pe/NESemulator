@@ -23,6 +23,7 @@ include "shift_rotate_instructions.nmp"
 include "branch_instructions.nmp"
 include "jump_instructions.nmp"
 include "other_instructions.nmp"
+include "illegal_instructions.nmp"
 
 //start mos6502
 op init()
@@ -42,10 +43,9 @@ op instruction(x: all)
     syntax  = x.syntax
     image   = x.image
     action  = {
-                if IS_JAM == 1 then
                     PC = PC + 1;
                     x.action;
-                end if;
+                    total_cycle = total_cycle + cycle;
             }
 
 op all =
@@ -60,4 +60,6 @@ ASL | LSR | ROL | ROR |
 BCC | BCS | BEQ | BMI | BNE | BPL | BVC | BVS |
 JMP | JSR | RTS |
 BIT | NOP |
+ALR | ANC | ANC2| ARR | SBX | LAX | SAX | SHX | SHY | SHA | DCP | ISC | SRE | RRA | RLA | SLO |
+USBC| NOP_ILLEGAL | SKB | IGN
 //list of instruction
