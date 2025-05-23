@@ -1,0 +1,6 @@
+macro NMI() = \
+
+
+macro IRQ() = \
+
+macro RESET() = \

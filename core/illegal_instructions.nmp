@@ -464,7 +464,7 @@ op ISC_ZEROPAGE(address_lo : card(8))
 
 op ISC_ZEROPAGE_X(address_lo : card(8))
         syntax = format("ISC $%2x, X", address_lo)
-        image = format("%8b %8b",0xF7 address_lo)
+        image = format("%8b %8b",0xF7, address_lo)
         action = {
                 let address: card(16) = 0;
                 ZPG_X(address, address_lo);
@@ -1066,7 +1066,7 @@ op RLA_ABSOLUTE_Y(address_lo : card(8), address_hi : card(8))
         }
 
 op RLA_PRE_INDIRECT(address_lo : card(8))
-        syntax = format("RLA ("$%2x, X)", address_lo)
+        syntax = format("RLA ($%2x, X)", address_lo)
         image = format("%8b %8b", 0x23, address_lo)
         action = {
                 let address: card(16) = 0;
@@ -1267,9 +1267,9 @@ op USBC(value : card(8))
         syntax = format("USBC #%2x", value)
         image = format("%8b %8b", 0xEB, value)
         action = {
-                value = ~value;
+                let value_tmp : card(8) = ~value;
 
-                let res: card(16) = A + value + RS_C;
+                let res: card(16) = A + value_tmp + SR_C;
 
                 cycle = 2;
 
@@ -1385,7 +1385,7 @@ op IGN_ABSOLUTE(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_1C(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x1C, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1395,7 +1395,7 @@ op IGN_ABSOLUTE_X_1C(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_3C(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x3C, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1405,7 +1405,7 @@ op IGN_ABSOLUTE_X_3C(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_5C(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x5C, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1415,7 +1415,7 @@ op IGN_ABSOLUTE_X_5C(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_7C(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0x7C, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1425,7 +1425,7 @@ op IGN_ABSOLUTE_X_7C(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_DC(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xDC, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1435,7 +1435,7 @@ op IGN_ABSOLUTE_X_DC(address_lo : card(8), address_hi : card(8))
         }
 
 op IGN_ABSOLUTE_X_FC(address_lo : card(8), address_hi : card(8))
-        syntax = format("IGN $%2x%2xn X"n address_hi, address_lo)
+        syntax = format("IGN $%2x%2x, X", address_hi, address_lo)
         image = format("%8b %8b %8b", 0xFC, address_lo, address_hi)
         action = {
                 let address : card(16) = 0;
@@ -1477,6 +1477,12 @@ op IGN_ZEROPAGE_64(address_lo : card(8))
 op IGN_ZEROPAGE_X_14(address_lo : card(8))
         syntax = format("IGN $%2x, X", address_lo)
         image = format("%8b %8b", 0x14, address_lo)
+        action = {
+                let address : card(16) = 0;
+                ZPG_X(address, address_lo);
+
+                cycle = 4;
+        }
 
 op IGN_ZEROPAGE_X_34(address_lo : card(8))
         syntax = format("IGN $%2x, X", address_lo)

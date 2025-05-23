@@ -33,7 +33,7 @@ op JSR(address_lo : card(8), address_hi : card(8))
         PC = address;
     }
 
-op RTS
+op RTS()
     syntax = "RTS"
     image = format("%8b", 0x60)
     action = {

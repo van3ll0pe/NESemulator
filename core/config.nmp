@@ -11,7 +11,7 @@ let URL = ""
 //configuration
 let proc = "mos6502"
 let bit_order = "uppermost"
-let gliss_isize = "8, 16, 32"
+let gliss_isize = "8, 16, 24"
 
 // useful types
 type bit = card(1)
@@ -79,4 +79,4 @@ macro pop16(value) =                                \
     SP = SP + 1;                                    \
     value = M[(0x1000 + SP)];                       \
     SP = SP + 1;                                    \
-    value = value | (M((0x1000 + SP)) << 8);
+    value = value | (M[(0x1000 + SP)] << 8);

@@ -36,7 +36,7 @@ op BIT_ZEROPAGE(address_lo : card(8))
         cycle = 3;
     }
 
-op NOP
+op NOP()
     syntax = "NOP"
     image = format("%8b", 0xEA)
     action = {

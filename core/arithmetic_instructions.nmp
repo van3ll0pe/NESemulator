@@ -125,7 +125,7 @@ op ADC_ABSOLUTE_Y(address_lo : card(8), address_hi: card(8))
     }
 
 op ADC_PRE_IND(address_lo : card(8))
-    syntax = format("ADC ($2x, X)", address_lo)
+    syntax = format("ADC ($%2x, X)", address_lo)
     image = format("%8b %8b", 0x61, address_lo)
     action = {
         let address: card(16) = 0;
@@ -147,7 +147,7 @@ op ADC_PRE_IND(address_lo : card(8))
 
 
 op ADC_POST_IND(address_lo : card(8))
-    syntax = format("ADC ($2x), Y", address_lo)
+    syntax = format("ADC ($%2x), Y", address_lo)
     image = format("%8b %8b", 0x71, address_lo)
     action = {
         let address: card(16) = 0;
@@ -177,9 +177,9 @@ op SBC_IMMEDIATE(value : card(8))
     action = {
         IMMEDIATE();
 
-        value = ~value;
+        let value_tmp : card(8) = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value_tmp + SR_C;
 
         cycle = 2;
 
@@ -202,7 +202,7 @@ op SBC_ZEROPAGE(address_lo : card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = 3;
 
@@ -225,7 +225,7 @@ op SBC_ZEROPAGE_X(address_lo: card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = 4;
 
@@ -248,7 +248,7 @@ op SBC_ABSOLUTE(address_lo : card(8), address_hi: card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = 4;
 
@@ -271,7 +271,7 @@ op SBC_ABSOLUTE_X(address_lo : card(8), address_hi : card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = cycle + 4;
 
@@ -294,7 +294,7 @@ op SBC_ABSOLUTE_Y(address_lo : card(8), address_hi: card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = cycle + 4;
 
@@ -317,7 +317,7 @@ op SBC_PRE_IND(address_lo : card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = 6;
 
@@ -340,7 +340,7 @@ op SBC_POST_IND(address_lo : card(8))
 
         value = ~value;
 
-        let res: card(16) = A + value + RS_C;
+        let res: card(16) = A + value + SR_C;
 
         cycle = cycle + 5;
 
