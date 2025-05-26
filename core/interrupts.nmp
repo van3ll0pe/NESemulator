@@ -2,19 +2,68 @@ op exceptions = IRQ | NMI | RESET
 
 op IRQ()
     action = {
+        if SR_I == 0 then
+            push16(PC);
+        
+            let SR_tmp = SR;
+            SR_tmp<5..5> = 1;
+            SR_tmp<4..4> = 0;
 
+            push(SR_tmp);
+            SR_I = 1;
+
+            let pch : card(8) = 0;
+            let pcl : card(8) = 0;
+
+            load(IRQ_ADDRESS_LO, pcl);
+            load(IRQ_ADDRESS_HI, pch);
+
+            PC = (pch << 8) | pcl;
+        endif;
     }
     is_irq = 1
 
 
 op NMI()
     action = {
+        push16(PC);
+        
+        let SR_tmp = SR;
+        SR_tmp<5..5> = 1;
+        SR_tmp<4..4> = 0;
 
+        push(SR_tmp);
+        SR_I = 1;
+
+        let pch : card(8) = 0;
+        let pcl : card(8) = 0;
+
+        load(NMI_ADDRESS_LO, pcl);
+        load(NMI_ADDRESS_HI, pch);
+
+        PC = (pch << 8) | pcl;
     }
     is_irq = 1
 
 op RESET()
     action = {
+let pch : card(8) = 0;
+        let pcl : card(8) = 0;
 
+        load(RES_ADDRESS_LO, pcl);
+        load(RES_ADDRESS_HI, pch);
+
+        PC = (pch << 8) | pcl;
+
+        A = 0;
+        X = 0;
+        Y = 0;
+
+        SP = 0xFD;
+
+        SR = 0b0b00100100;
+        total_cycle = 0;
+        cycle = 0;
+        is_jam = 0;
     }
     is_irq = 1
