@@ -42,7 +42,10 @@ reg SR_C[1, bit] alias = SR<0..0>
 
 
 // memory
-mem M[65536, byte]
+mem ram[0x800, card(8)]
+mem ppuram[0x8, card(8)]
+mem apuram[0x20, card(8)]
+mem cartridge[0xBFE0, card(8)]
 
 let IRQ_ADDRESS_LO : card(16) = 0xFFFE
 let IRQ_ADDRESS_HI : card(16) = 0xFFFF
@@ -53,32 +56,57 @@ let RES_ADDRESS_HI : card(16) = 0xFFFD
 let NMI_ADDRESS_LO : card(16) = 0xFFFA
 let NMI_ADDRESS_HI : card(16) = 0xFFFB
 
-
 macro store(address, data) =    \
-    M[address] = data;
+    if (address < 0x2000) then          \ 
+        ram[(address % 0x800)] = data;   \
+    else                                    \
+        if (address < 0x4000) then       \
+        ppuram[((address - 0x2000) % 0x8)] = data;   \
+        else                                        \
+            if (address < 0x4020) then               \
+                apuram[(address - 0x4000)] = data;      \
+            else                                        \
+                if (address < 0x8000) then              \
+                    cartridge[(address - 0x4020)] = data; \
+                endif;                                   \
+            endif;                                      \
+        endif;                                          \
+    endif;
 
 macro load(address, var) =      \
-    var = M[address];
+    if (address < 0x2000) then          \
+        var = ram[(address % 0x800)];   \
+    else                                \
+        if (address < 0x4000) then       \
+            var = ppuram[((address - 0x2000) % 0x8)];   \
+        else                                        \
+            if (address < 0x4020) then               \
+                var = apuram[(address - 0x4000)];      \
+            else                                        \
+                var = cartridge[address - 0x4020];     \
+            endif;                                      \
+        endif;                                          \
+    endif;
 
 
 //STACK POINTER IS ONLY 8bits on the memory plage 0x0100 - 0x01FF
 
 macro push(value) =             \
-    M[(0x1000 + SP)] = value;   \
+    ram[(0x1000 + SP)] = value;   \
     SP = SP - 1;
 
 macro pop(register) =           \
     SP = SP + 1;                \
-    register = M[(0x1000 + SP)];
+    register = ram[(0x1000 + SP)];
 
 macro push16(value) =                               \
-    M[(0x1000 + SP)] = ((value & 0xFF00) >> 8);     \
+    ram[(0x1000 + SP)] = ((value & 0xFF00) >> 8);     \
     SP = SP - 1;                                    \
-    M[(0x1000 + SP)] = (value & 0xFF);              \
+    ram[(0x1000 + SP)] = (value & 0xFF);              \
     SP = SP - 1;                        
 
 macro pop16(value) =                                \
     SP = SP + 1;                                    \
-    value = M[(0x1000 + SP)];                       \
+    value = ram[(0x1000 + SP)];                       \
     SP = SP + 1;                                    \
-    value = value | (M[(0x1000 + SP)] << 8);
+    value = value | (ram[(0x1000 + SP)] << 8);

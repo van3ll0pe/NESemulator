@@ -46,8 +46,8 @@ op instruction(x: all)
                     if is_jam == 0 then
                         PC = PC + 1;
                         x.action;
-                        total_cycle = total_cycle + cycle;
                     endif;
+                    total_cycle = total_cycle + cycle;
             }
 
 op all =
